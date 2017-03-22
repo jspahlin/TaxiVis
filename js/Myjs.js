@@ -129,6 +129,7 @@ map.on('draw:created', function (e) {
 		});
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
+	console.log("hi I made a change!");
 });
 //*****************************************************************************************************************************************
 // DrawRS Function:
