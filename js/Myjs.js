@@ -132,7 +132,7 @@ map.on('draw:created', function (e) {
 		DrawRS(result);
 		});
 		// update graphs when drawing a rectangle
-		testVis();
+		testVis(lineData);
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
@@ -219,7 +219,7 @@ var line = d3.line()
       .attr("d", line);
 /*});*/
 }
-taxiVis
+
 
 
 // sample bar chart
