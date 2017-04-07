@@ -246,7 +246,7 @@ console.log("before g.append(\"g\") 3");
 
 // sample bar chart
 
-function barChart(barDataParam){
+function barChart(barData){
 	
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 400 - margin.left - margin.right,
@@ -283,8 +283,8 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 */
  
   //x.domain(barData.map(function(d) { return d.starttime; }));
-  x.domain(d3.extent(barDataParam, function(d) { return d.avspeed; }));
-  y.domain(d3.extent(barDataParam, function(d) { return d.duration;  }));
+  x.domain(d3.extent(barData, function(d) { return d.maxspeed; }));
+  y.domain(d3.extent(barData, function(d) { return d.duration;  }));
 
   svg.append("g")
       .attr("class", "x axis")
@@ -308,10 +308,10 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 	  .attr("fill", "red");
 
   svg.selectAll("bar")
-      .data(barDataParam)
+      .data(barData)
       .enter().append("rect")
       .style("fill", "steelblue")
-      .attr("x", function(d) { return x(d.avspeed); })
+      .attr("x", function(d) { return x(d.maxspeed); })
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
