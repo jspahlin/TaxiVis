@@ -165,7 +165,7 @@ function testVis(data) {
 	cleanData = function (d) {
 		var newArray = new Array();
 		for (var i = 0; i < d.length; ++i) {
-			if (typeof d.duration != 'undefined') {
+			if (d.duration != null && d.avgspeed != null) {
 				newArray.push(d[i]);
 			}
 		}
@@ -173,6 +173,7 @@ function testVis(data) {
 	}
 	
 	testVisData = cleanData(data);
+	data = testVisData;
 
 var svg = d3.select("body").select("div#rightside").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
