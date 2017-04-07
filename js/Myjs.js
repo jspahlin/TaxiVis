@@ -301,7 +301,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 	  .attr("fill", "red");
 
   svg.selectAll("bar")
-      .data(data)
+      .data(barData)
       .enter().append("rect")
       .style("fill", "steelblue")
       .attr("x", function(d) { return x(d.starttime); })
