@@ -164,8 +164,8 @@ function testVis(data) {
 //preparse data to reduce it to values without undefined values.
 	cleanData = function (d) {
 		var newArray = new Array();
-		for (var i = 0; i < d.length; ++i) {
-			if (d.duration != null && d.avgspeed != null) {
+		for (var i = 0; i < 10; ++i) {
+			if (d[i].duration != null && d[i].avgspeed != null) {
 				newArray.push(d[i]);
 			}
 		}
