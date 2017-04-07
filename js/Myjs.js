@@ -242,7 +242,9 @@ var xAxis = d3.axisBottom(x).tickFormat(d3.timeParse("%Y-%m"));
 
 var yAxis = d3.axisLeft(y).ticks(10);
 	
-var svg = d3.select("body").select("div#rightside").append("svg")
+d3.select("body").select("div#rightside").select("div#barchart").selectAll("*").remove();
+
+var svg = d3.select("body").select("div#rightside").select("div#barchart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
