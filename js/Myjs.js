@@ -247,7 +247,7 @@ console.log("before g.append(\"g\") 3");
 // sample bar chart
 
 function barChart(data){
-	
+	if(data == null) { return null; }
 	data = cleanData(data);
 	
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
