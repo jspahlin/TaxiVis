@@ -172,7 +172,7 @@ function cleanData(d) {
 	}
 function testVis(data) {
 //preparse data to reduce it to values without undefined values.
-
+	if(data == null) { return null; }
 	
 	testVisData = cleanData(data);
 	data = testVisData;
