@@ -285,8 +285,8 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 */
  
   //x.domain(barData.map(function(d) { return d.starttime; }));
-  x.domain(d3.extent(barDataParam, function(d) { return d.avspeed; }));
-  y.domain(d3.extent(barDataParam, function(d) { return d.duration;  }));
+  x.domain(d3.extent(data, function(d) { return d.avspeed; }));
+  y.domain(d3.extent(data, function(d) { return d.duration;  }));
 
   svg.append("g")
       .attr("class", "x axis")
