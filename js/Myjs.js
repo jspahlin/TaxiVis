@@ -133,7 +133,6 @@ map.on('draw:created', function (e) {
 		});
 		// update graphs when drawing a rectangle
 		testVis();
-		barChart();
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
@@ -161,7 +160,7 @@ function DrawRS(trips) {
 // inspiration taken from https://bl.ocks.org/mbostock/raw/3883245/
 // for some of the linegraph code.
 
-function testVis() {
+function testVis(data) {
 	
 
 var svg = d3.select("body").select("div#rightside").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
@@ -179,18 +178,20 @@ var y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
 var line = d3.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
+    .x(function(d) { return x(d.starttime); })
+    .y(function(d) { return y(d.maxspeed); });
 
-d3.tsv("js/data.tsv", function(d) {
+/*d3.tsv("js/data.tsv", function(d) {
   d.date = parseTime(d.date);
   d.close = +d.close;
   return d;
 }, function(error, data) {
   if (error) throw error;
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain(d3.extent(data, function(d) { return d.close; }));
+*/
+	// we handle data that is passed in the first argument of the function.
+	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
+  x.domain(d3.extent(data, function(d) { return d.starttime; }));
+  y.domain(d3.extent(data, function(d) { return d.maxspeed; })); 
 
   g.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -216,14 +217,14 @@ d3.tsv("js/data.tsv", function(d) {
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 1.5)
       .attr("d", line);
-});
+/*});*/
 }
-
+taxiVis
 
 
 // sample bar chart
 
-function barchart(){
+function barChart(){
 	
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 400 - margin.left - margin.right,
@@ -291,4 +292,4 @@ d3.csv("data/bar-data.csv", function(error, data) {
 
 });
 }
-
+barChart();
