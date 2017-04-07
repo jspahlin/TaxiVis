@@ -268,16 +268,16 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 		 
-d3.csv("data/bar-data.csv", function(error, data) {
+/*d3.csv("data/bar-data.csv", function(error, data) {
 	
     data.forEach(function(d) {
         d.date = parseDate(d.date);
         d.value = +d.value;
 		//console.log(d.date);
     });
-	
-  x.domain(data.map(function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d.value; })]);
+*/	
+  x.domain(barData.map(function(d) { return d.starttime; }));
+  y.domain([0, d3.max(barData, function(d) { return d.duration; })]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -297,18 +297,18 @@ d3.csv("data/bar-data.csv", function(error, data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Value ($)")
+      .text("Duration")//"Value ($)")
 	  .attr("fill", "red");
 
   svg.selectAll("bar")
       .data(data)
       .enter().append("rect")
       .style("fill", "steelblue")
-      .attr("x", function(d) { return x(d.date); })
+      .attr("x", function(d) { return x(d.starttime); })
       .attr("width", x.bandwidth())
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); });
+      .attr("y", function(d) { return y(d.duration); })
+      .attr("height", function(d) { return height - y(d.duration); });
 
-});
+//});
 }
 //barChart();
