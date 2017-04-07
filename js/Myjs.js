@@ -114,7 +114,7 @@ function clearMap() {
 // Click the small box on Map and start drawing to do query.
 //*****************************************************************************************************************************************	
 var lineData;
-var barData;
+//var barData;
 map.on('draw:created', function (e) {
 	
 	clearMap();
@@ -126,14 +126,14 @@ map.on('draw:created', function (e) {
 		var bounds=layer.getBounds();
 		rt.data([[bounds.getSouthWest().lng,bounds.getSouthWest().lat],[bounds.getNorthEast().lng,bounds.getNorthEast().lat]]).
 		then(function(d){var result = d.map(function(a) {return a.properties;});
-		barData= result;
+		var barData= result;
 		lineData = result;
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 		DrawRS(result);
 		});
 		// update graphs when drawing a rectangle
 		testVis(lineData);
-		barChart();
+		barChart(barData);
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
@@ -180,7 +180,9 @@ function testVis(data) {
 	data = data.sort(function (a, b) {
 		return a.duration - b.duration;
 	});
-var svg = d3.select("body").select("div#rightside").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
+	
+	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
+var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom,
@@ -244,7 +246,7 @@ console.log("before g.append(\"g\") 3");
 
 // sample bar chart
 
-function barChart(){
+function barChart(barData){
 	
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 400 - margin.left - margin.right,
@@ -281,8 +283,8 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 */
  
   //x.domain(barData.map(function(d) { return d.starttime; }));
-  x.domain([0, d3.max(barData, function(d) { return d.starttime; })]);
-  y.domain([0, d3.max(barData, function(d) { return d.duration; })]);
+  x.domain(d3.extent(barData, function(d) { return parseDate(d.starttime); }));
+  y.domain([0, d3.max(barData, function(d) { return d.duration;  })]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -309,7 +311,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
       .data(barData)
       .enter().append("rect")
       .style("fill", "steelblue")
-      .attr("x", function(d) { return x(d.starttime); })
+      .attr("x", function(d) { return x(parseDate(d.starttime)); })
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
