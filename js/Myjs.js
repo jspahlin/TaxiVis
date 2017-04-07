@@ -131,6 +131,9 @@ map.on('draw:created', function (e) {
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 		DrawRS(result);
 		});
+		// update graphs when drawing a rectangle
+		testVis();
+		barChart();
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
@@ -216,7 +219,7 @@ d3.tsv("js/data.tsv", function(d) {
 });
 }
 
-testVis();
+
 
 // sample bar chart
 
@@ -289,4 +292,3 @@ d3.csv("data/bar-data.csv", function(error, data) {
 });
 }
 
-barchart();
