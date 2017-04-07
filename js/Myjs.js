@@ -275,8 +275,10 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
         d.value = +d.value;
 		//console.log(d.date);
     });
-*/	
-  x.domain(barData.map(function(d) { return d.starttime; }));
+*/
+ 
+  //x.domain(barData.map(function(d) { return d.starttime; }));
+  x.domain([0, d3.max(barData, function(d) { return d.starttime; })]);
   y.domain([0, d3.max(barData, function(d) { return d.duration; })]);
 
   svg.append("g")
