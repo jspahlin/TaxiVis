@@ -178,8 +178,8 @@ var y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
 var line = d3.line()
-    .x(function(d) { return x(d.starttime); })
-    .y(function(d) { return y(d.maxspeed); });
+    .x(function(d) { return x(d.duration); })
+    .y(function(d) { return y(d.avgspeed); });
 
 /*d3.tsv("js/data.tsv", function(d) {
   d.date = parseTime(d.date);
@@ -190,8 +190,8 @@ var line = d3.line()
 */
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
-  x.domain(d3.extent(data, function(d) { return d.starttime; }));
-  y.domain(d3.extent(data, function(d) { return d.maxspeed; })); 
+  x.domain(d3.extent(data, function(d) { return d.duration; }));
+  y.domain(d3.extent(data, function(d) { return d.avgspeed; })); 
 
   g.append("g")
       .attr("transform", "translate(0," + height + ")")
