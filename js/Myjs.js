@@ -247,7 +247,7 @@ d3.csv("data/bar-data.csv", function(error, data) {
     data.forEach(function(d) {
         d.date = parseDate(d.date);
         d.value = +d.value;
-		console.log(d.date);
+		//console.log(d.date);
     });
 	
   x.domain(data.map(function(d) { return d.date; }));
