@@ -159,9 +159,20 @@ function DrawRS(trips) {
 }
 // inspiration taken from https://bl.ocks.org/mbostock/raw/3883245/
 // for some of the linegraph code.
-
+var testVisData;
 function testVis(data) {
+//preparse data to reduce it to values without undefined values.
+	cleanData = function (d) {
+		var newArray = new Array();
+		for (var i = 0; i < d.length; ++i) {
+			if (typeof d.duration != 'undefined') {
+				newArray.push(d[i]);
+			}
+		}
+		return newArray;
+	}
 	
+	testVisData = cleanData(data);
 
 var svg = d3.select("body").select("div#rightside").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
