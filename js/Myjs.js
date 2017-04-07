@@ -114,7 +114,7 @@ function clearMap() {
 // Click the small box on Map and start drawing to do query.
 //*****************************************************************************************************************************************	
 var lineData;
-//var barData;
+var barData;
 map.on('draw:created', function (e) {
 	
 	clearMap();
@@ -126,7 +126,7 @@ map.on('draw:created', function (e) {
 		var bounds=layer.getBounds();
 		rt.data([[bounds.getSouthWest().lng,bounds.getSouthWest().lat],[bounds.getNorthEast().lng,bounds.getNorthEast().lat]]).
 		then(function(d){var result = d.map(function(a) {return a.properties;});
-		var barData= result;
+		barData= result;
 		lineData = result;
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 		DrawRS(result);
