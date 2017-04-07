@@ -133,6 +133,7 @@ map.on('draw:created', function (e) {
 		});
 		// update graphs when drawing a rectangle
 		testVis(lineData);
+		barChart();
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
@@ -164,11 +165,9 @@ function testVis(data) {
 //preparse data to reduce it to values without undefined values.
 	cleanData = function (d) {
 		var newArray = new Array();
-		if(d != null) {
-			for (var i = 0; i < d.length; ++i) {
-				if (d[i].duration != null && d[i].avspeed != null) {
-					newArray.push(d[i]);
-				}
+		for (var i = 0; i < 10; ++i) {
+			if (d[i].duration != null && d[i].avgspeed != null) {
+				newArray.push(d[i]);
 			}
 		}
 		return newArray;
@@ -193,7 +192,7 @@ var y = d3.scaleLinear()
 
 var line = d3.line()
     .x(function(d) { return x(d.duration); })
-    .y(function(d) { return y(d.avspeed); });
+    .y(function(d) { return y(d.avgspeed); });
 
 /*d3.tsv("js/data.tsv", function(d) {
   d.date = parseTime(d.date);
@@ -207,7 +206,7 @@ var line = d3.line()
 	console.log("before x.domain");
   x.domain(d3.extent(data, function(d) { return d.duration; }));
 	console.log("before y.domain");
-  y.domain(d3.extent(data, function(d) { return d.avspeed; })); 
+  y.domain(d3.extent(data, function(d) { return d.avgspeed; })); 
 
 	console.log("before g.append(\"g\")");
   g.append("g")
@@ -311,4 +310,4 @@ d3.csv("data/bar-data.csv", function(error, data) {
 
 });
 }
-barChart();
+//barChart();
