@@ -161,17 +161,18 @@ function DrawRS(trips) {
 // inspiration taken from https://bl.ocks.org/mbostock/raw/3883245/
 // for some of the linegraph code.
 var testVisData;
-function testVis(data) {
-//preparse data to reduce it to values without undefined values.
-	cleanData = function (d) {
+function cleanData(d) {
 		var newArray = new Array();
-		for (var i = 0; i < 10; ++i) {
-			if (d[i].duration != null && d[i].avgspeed != null) {
+		for (var i = 0; i < d.length; ++i) {
+			if (d[i].duration != null && d[i].avspeed != null) {
 				newArray.push(d[i]);
 			}
 		}
 		return newArray;
 	}
+function testVis(data) {
+//preparse data to reduce it to values without undefined values.
+
 	
 	testVisData = cleanData(data);
 	data = testVisData;
@@ -192,7 +193,7 @@ var y = d3.scaleLinear()
 
 var line = d3.line()
     .x(function(d) { return x(d.duration); })
-    .y(function(d) { return y(d.avgspeed); });
+    .y(function(d) { return y(d.avspeed); });
 
 /*d3.tsv("js/data.tsv", function(d) {
   d.date = parseTime(d.date);
@@ -206,7 +207,7 @@ var line = d3.line()
 	console.log("before x.domain");
   x.domain(d3.extent(data, function(d) { return d.duration; }));
 	console.log("before y.domain");
-  y.domain(d3.extent(data, function(d) { return d.avgspeed; })); 
+  y.domain(d3.extent(data, function(d) { return d.avspeed; })); 
 
 	console.log("before g.append(\"g\")");
   g.append("g")
