@@ -177,6 +177,9 @@ function testVis(data) {
 	testVisData = cleanData(data);
 	data = testVisData;
 
+	data = data.sort(function (a, b) {
+		return a.duration - b.duration;
+	}
 var svg = d3.select("body").select("div#rightside").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
