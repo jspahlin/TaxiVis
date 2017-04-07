@@ -246,7 +246,9 @@ console.log("before g.append(\"g\") 3");
 
 // sample bar chart
 
-function barChart(barDataParam){
+function barChart(data){
+	
+	data = cleanData(data);
 	
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 400 - margin.left - margin.right,
@@ -308,7 +310,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 	  .attr("fill", "red");
 
   svg.selectAll("bar")
-      .data(barDataParam)
+      .data(data)
       .enter().append("rect")
       .style("fill", "steelblue")
       .attr("x", function(d) { return x(d.avspeed); })
