@@ -263,7 +263,7 @@ function barChart(data){
 				data[i].duration = Math.round(data[i].duration);
 			}
 		}
-data = data.slice(1,3);
+data = data.slice(1,5);
 	data = data.sort(function (a, b) {
 		return a.avspeed - b.avspeed;
 	});
