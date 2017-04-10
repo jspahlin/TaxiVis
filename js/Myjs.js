@@ -132,7 +132,7 @@ map.on('draw:created', function (e) {
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 				 		// update graphs when drawing a rectangle
 		testVis(lineData);
-		//barChart(barData);
+		barChart(barData);
 		DrawRS(result);
 		});
 
@@ -299,14 +299,14 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 */
  console.log("bandwidth = " + x.bandwdith);
 	console.log(x);
-  //x.domain(barData.map(function(d) { return d.starttime; }));
+/*  //x.domain(barData.map(function(d) { return d.starttime; }));
 	var domainArray=new array();
 	for (var i=0; i<data.length; ++i)
 	{
 		domainArray[domainArray.length]=data[i].avspeed;
 	}
-	x.domain(domainArray);
-  //x.domain(d3.extent(data, function(d) { return d.avspeed; }));
+	x.domain(domainArray); */
+  x.domain(d3.extent(data, function(d) { return d.avspeed; }));
   y.domain(d3.extent(data, function(d) { return d.duration;  }));
 
   svg.append("g")
