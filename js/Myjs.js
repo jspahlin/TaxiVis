@@ -132,7 +132,7 @@ map.on('draw:created', function (e) {
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
 				 		// update graphs when drawing a rectangle
 		testVis(lineData);
-		barChart(barData);
+		//barChart(barData);
 		DrawRS(result);
 		});
 
