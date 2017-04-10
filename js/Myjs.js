@@ -113,8 +113,8 @@ function clearMap() {
 // Draw rectangle on Map Event for Query :
 // Click the small box on Map and start drawing to do query.
 //*****************************************************************************************************************************************	
-var lineData = [];
-var barData = [];
+var lineData;
+var barData;
 map.on('draw:created', function (e) {
 	
 	clearMap();
@@ -130,11 +130,12 @@ map.on('draw:created', function (e) {
 		barData= result;
 		lineData = result;
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
-		DrawRS(result);
-		});
-		// update graphs when drawing a rectangle
+				 		// update graphs when drawing a rectangle
 		testVis(lineData);
 		barChart(barData);
+		DrawRS(result);
+		});
+
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
 	console.log("hi I made a change!");
