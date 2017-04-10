@@ -162,7 +162,9 @@ function DrawRS(trips) {
 // for some of the linegraph code.
 var testVisData;
 function cleanData(d) {
+	
 		var newArray = new Array();
+		if (d == null) { return newArray; }
 		for (var i = 0; i < d.length; ++i) {
 			if (d[i].duration != null && d[i].avspeed != null) {
 				newArray.push(d[i]);
