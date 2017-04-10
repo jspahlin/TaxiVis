@@ -267,7 +267,8 @@ var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
 
 var y = d3.scaleLinear().range([height, 0]);
 
-var xAxis = d3.axisBottom(x).tickFormat(d3.timeParse("%Y-%m"));
+//var xAxis = d3.axisBottom(x).tickFormat(d3.timeParse("%Y-%m"));
+var xAxis = d3.axisBottom(x).ticks(10);
 
 var yAxis = d3.axisLeft(y).ticks(10);
 	
