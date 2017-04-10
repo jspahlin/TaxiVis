@@ -237,8 +237,6 @@ var line = d3.line()
 
 }
 
-
-
 // sample bar chart
 
 function barChart(data){
@@ -253,7 +251,7 @@ function barChart(data){
 				data[i].duration = Math.round(data[i].duration);
 			}
 		}
-data = data.slice(1,5);
+data = data.slice(1,20);
 	data = data.sort(function (a, b) {
 		return a.avspeed - b.avspeed;
 	});
@@ -303,7 +301,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
       .enter().append("rect")
       .style("fill", "steelblue")
       .attr("x", function(d) { console.log([d.avspeed,d.duration]); return x(d.avspeed); })
-      .attr("width", x.bandwidth()/data.length)
+      .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
 }
