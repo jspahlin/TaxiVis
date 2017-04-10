@@ -162,6 +162,7 @@ function DrawRS(trips) {
 }
 // inspiration taken from https://bl.ocks.org/mbostock/raw/3883245/
 // for some of the linegraph code.
+
 var testVisData;
 function cleanData(d) {
 	
@@ -193,8 +194,6 @@ var svg = d3.select("body").select("div#rightside").select("div#linechart").appe
     height = +svg.attr("height") - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function(d) { console.log(d); });
 
-//var parseTime = d3.timeParse("%d-%b-%y");
-
 var x = d3.scaleTime()
     .rangeRound([0, width]);
 
@@ -207,18 +206,16 @@ var line = d3.line()
 
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
-	//console.log("before x.domain");
-  x.domain(d3.extent(data, function(d) { return d.duration; }));
-	//console.log("before y.domain");
+	
+  x.domain(d3.extent(data, function(d) { return d.duration; }));	
   y.domain(d3.extent(data, function(d) { return d.avspeed; })); 
 
-	//console.log("before g.append(\"g\")");
   g.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
     .select(".domain")
       .remove();
-	//console.log("before g.append(\"g\") 2");
+	
   g.append("g")
       .call(d3.axisLeft(y))
     .append("text")
@@ -228,7 +225,7 @@ var line = d3.line()
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
       .text("Price ($)");
-//console.log("before g.append(\"g\") 3");
+
   g.append("path")
       .datum(data)
       .attr("fill", "none")
