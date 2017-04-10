@@ -300,7 +300,13 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
  console.log("bandwidth = " + x.bandwdith);
 	console.log(x);
   //x.domain(barData.map(function(d) { return d.starttime; }));
-  x.domain(d3.extent(data, function(d) { return d.avspeed; }));
+	var domainArray=new array();
+	for (int i=0; i<data.length; ++i)
+	{
+		domainArray[domainArray.length]=data[i].avspeed;
+	}
+	x.domain(domainArray);
+  //x.domain(d3.extent(data, function(d) { return d.avspeed; }));
   y.domain(d3.extent(data, function(d) { return d.duration;  }));
 
   svg.append("g")
