@@ -328,7 +328,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
       .enter().append("rect")
       .style("fill", "steelblue")
       .attr("x", function(d) { console.log(d.avspeed); return x(d.avspeed); })
-      .attr("width", x.bandwidth())
+      .attr("width", x.bandwidth()/data.length)
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
 
