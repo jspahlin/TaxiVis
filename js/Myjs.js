@@ -267,14 +267,9 @@ data = data.slice(1,5);
 	data = data.sort(function (a, b) {
 		return a.avspeed - b.avspeed;
 	});
-// Parse the date / time
-
-//var	parseDate = d3.timeParse("%Y-%m");
 
 var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
 var y = d3.scaleLinear().range([height, 0]);
-
-//var xAxis = d3.axisBottom(x).tickFormat(d3.timeParse("%Y-%m"));
 
 var xAxis = d3.axisBottom(x).ticks(10);
 var yAxis = d3.axisLeft(y).ticks(10);
@@ -287,25 +282,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
     .append("g")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
-		 
-/*d3.csv("data/bar-data.csv", function(error, data) {
-	
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.value = +d.value;
-		//console.log(d.date);
-    });
-*/
- //console.log("bandwidth = " + x.bandwdith);
-	//console.log(x);
-/*  //x.domain(barData.map(function(d) { return d.starttime; }));
-	var domainArray=new array();
-	for (var i=0; i<data.length; ++i)
-	{
-		domainArray[domainArray.length]=data[i].avspeed;
-	}
-	x.domain(domainArray); */
-	
+		 	
   x.domain(d3.extent(data, function(d) { return d.avspeed; }));
   y.domain(d3.extent(data, function(d) { return d.duration;  }));
 
@@ -338,7 +315,5 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
       .attr("width", x.bandwidth()/data.length)
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
-
-//});
 }
-//barChart();
+
