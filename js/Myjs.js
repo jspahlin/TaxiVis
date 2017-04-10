@@ -257,6 +257,11 @@ function barChart(data){
 	var margin = {top: 20, right: 20, bottom: 70, left: 40},
     width = 400 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
+	for (var i = 0; i < data.length; ++i) {
+			if (data[i].avspeed != null) {
+				data[i].avspeed = Math.round(data[i].avspeed);
+			}
+		}
 data = data.slice(1,3);
 	data = data.sort(function (a, b) {
 		return a.avspeed - b.avspeed;
