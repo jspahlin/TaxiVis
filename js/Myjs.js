@@ -271,7 +271,7 @@ data = data.slice(1,5);
 
 var	parseDate = d3.timeParse("%Y-%m");
 
-var x = d3.scaleLinear().range([0, width]).padding(0.2);
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
 
 var y = d3.scaleLinear().range([height, 0]);
 
