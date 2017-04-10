@@ -113,8 +113,8 @@ function clearMap() {
 // Draw rectangle on Map Event for Query :
 // Click the small box on Map and start drawing to do query.
 //*****************************************************************************************************************************************	
-var lineData;
-var barData;
+var lineData = [];
+var barData = [];
 map.on('draw:created', function (e) {
 	
 	clearMap();
