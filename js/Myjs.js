@@ -283,7 +283,8 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 		 	
-  x.domain(d3.extent(data, function(d) { return d.avspeed; }));
+  //x.domain(d3.extent(data, function(d) { return d.avspeed; }));
+  x.domain(data.map(function(d) { return d.avspeed; }));
   y.domain(d3.extent(data, function(d) { return d.duration;  }));
 
   svg.append("g")
