@@ -258,8 +258,9 @@ function barChart(data){
     width = 400 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 	for (var i = 0; i < data.length; ++i) {
-			if (data[i].avspeed != null) {
+			if (data[i].avspeed != null && data[i].duration != null) {
 				data[i].avspeed = Math.round(data[i].avspeed);
+				data[i].duration = Math.round(data[i].duration);
 			}
 		}
 data = data.slice(1,3);
