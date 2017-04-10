@@ -259,6 +259,9 @@ function barChart(data){
     width = 400 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
+	data = data.sort(function (a, b) {
+		return a.avspeed - b.avspeed;
+	});
 // Parse the date / time
 
 var	parseDate = d3.timeParse("%Y-%m");
