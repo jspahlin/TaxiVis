@@ -301,7 +301,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 	console.log(x);
   //x.domain(barData.map(function(d) { return d.starttime; }));
 	var domainArray=new array();
-	for (int i=0; i<data.length; ++i)
+	for (var i=0; i<data.length; ++i)
 	{
 		domainArray[domainArray.length]=data[i].avspeed;
 	}
