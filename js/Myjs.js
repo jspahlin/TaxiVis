@@ -126,7 +126,7 @@ map.on('draw:created', function (e) {
 		var bounds=layer.getBounds();
 		rt.data([[bounds.getSouthWest().lng,bounds.getSouthWest().lat],[bounds.getNorthEast().lng,bounds.getNorthEast().lat]]).
 		then(function(d){var result = d.map(function(a) {return a.properties;});
-				 console.log(d.length);
+				 //console.log(d.length);
 		barData= result;
 		lineData = result;
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
@@ -138,7 +138,7 @@ map.on('draw:created', function (e) {
 
 	}
 	drawnItems.addLayer(layer);			//Add your Selection to Map  
-	console.log("hi I made a change!");
+	//console.log("hi I made a change!");
 });
 //*****************************************************************************************************************************************
 // DrawRS Function:
@@ -172,7 +172,7 @@ function cleanData(d) {
 				newArray.push(d[i]);
 			}
 		}
-	console.log(newArray);
+	//console.log(newArray);
 		return newArray;
 	}
 function testVis(data) {
@@ -193,7 +193,7 @@ var svg = d3.select("body").select("div#rightside").select("div#linechart").appe
     height = +svg.attr("height") - margin.top - margin.bottom,
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function(d) { console.log(d); });
 
-var parseTime = d3.timeParse("%d-%b-%y");
+//var parseTime = d3.timeParse("%d-%b-%y");
 
 var x = d3.scaleTime()
     .rangeRound([0, width]);
@@ -205,27 +205,20 @@ var line = d3.line()
     .x(function(d) { return x(d.duration); })
     .y(function(d) { return y(d.avspeed); });
 
-/*d3.tsv("js/data.tsv", function(d) {
-  d.date = parseTime(d.date);
-  d.close = +d.close;
-  return d;
-}, function(error, data) {
-  if (error) throw error;
-*/
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
-	console.log("before x.domain");
+	//console.log("before x.domain");
   x.domain(d3.extent(data, function(d) { return d.duration; }));
-	console.log("before y.domain");
+	//console.log("before y.domain");
   y.domain(d3.extent(data, function(d) { return d.avspeed; })); 
 
-	console.log("before g.append(\"g\")");
+	//console.log("before g.append(\"g\")");
   g.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x))
     .select(".domain")
       .remove();
-	console.log("before g.append(\"g\") 2");
+	//console.log("before g.append(\"g\") 2");
   g.append("g")
       .call(d3.axisLeft(y))
     .append("text")
@@ -235,7 +228,7 @@ var line = d3.line()
       .attr("dy", "0.71em")
       .attr("text-anchor", "end")
       .text("Price ($)");
-console.log("before g.append(\"g\") 3");
+//console.log("before g.append(\"g\") 3");
   g.append("path")
       .datum(data)
       .attr("fill", "none")
@@ -244,7 +237,7 @@ console.log("before g.append(\"g\") 3");
       .attr("stroke-linecap", "round")
       .attr("stroke-width", 1.5)
       .attr("d", line);
-/*});*/
+
 }
 
 
