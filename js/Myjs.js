@@ -187,7 +187,7 @@ function testVis(data) {
 	});
 	
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
-var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
+var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height",300).attr("id","testVis").on("click", function(d) { console.log(d); }),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom,
