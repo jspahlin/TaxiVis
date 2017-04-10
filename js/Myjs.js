@@ -187,11 +187,11 @@ function testVis(data) {
 	});
 	
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
-var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height",300).attr("id","testVis").on("click", function(d) { console.log(d); }),
+var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height",300).attr("id","testVis"),
     margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = +svg.attr("width") - margin.left - margin.right,
     height = +svg.attr("height") - margin.top - margin.bottom,
-    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function(d) { console.log(d); });
 
 var parseTime = d3.timeParse("%d-%b-%y");
 
