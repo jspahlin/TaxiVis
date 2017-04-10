@@ -297,7 +297,8 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
 		//console.log(d.date);
     });
 */
- 
+ console.log("bandwidth = " + x.bandwdith);
+	console.log(x);
   //x.domain(barData.map(function(d) { return d.starttime; }));
   x.domain(d3.extent(data, function(d) { return d.avspeed; }));
   y.domain(d3.extent(data, function(d) { return d.duration;  }));
@@ -327,7 +328,7 @@ var svg = d3.select("body").select("div#rightside").select("div#barchart").appen
       .data(data)
       .enter().append("rect")
       .style("fill", "steelblue")
-      .attr("x", function(d) { console.log(d.avspeed); return x(d.avspeed); })
+      .attr("x", function(d) { console.log([d.avspeed,d.duration]); return x(d.avspeed); })
       .attr("width", x.bandwidth()/data.length)
       .attr("y", function(d) { return y(d.duration); })
       .attr("height", function(d) { return height - y(d.duration); });
