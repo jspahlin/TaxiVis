@@ -126,6 +126,7 @@ map.on('draw:created', function (e) {
 		var bounds=layer.getBounds();
 		rt.data([[bounds.getSouthWest().lng,bounds.getSouthWest().lat],[bounds.getNorthEast().lng,bounds.getNorthEast().lat]]).
 		then(function(d){var result = d.map(function(a) {return a.properties;});
+				 console.log(d.length);
 		barData= result;
 		lineData = result;
 		console.log(result);		// Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
