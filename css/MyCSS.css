@@ -26,7 +26,6 @@ html {
 div#toolbar {
 	width: 400px;
 	height: 50px;
-	background:#F00;
 	position:relative;
 	left: 50px;
 	top:550px;
@@ -40,7 +39,7 @@ div#toolbar ul li{
 	display:block;
 }
 div#toolbar ul li a{
-	color:#000;
+	color:#30C;
 	line-height:20px;
 	font-size:14px;
 }
