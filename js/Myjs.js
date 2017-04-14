@@ -275,3 +275,18 @@ function barChart(data) {
 			d3.select("#t" + d.tripid).remove();
 		});
 }
+
+
+// Returns an array marking the start of the bin
+// min_bin and max_bin represent the start and end of the valid range.
+// spacing is the distance or size of the bins.
+// example:
+//	[0, 10, 20, 30, 40, 50, 60, 70, 80, 90] <- makeBinArray(0,100,10)
+function makeBinArray(min_bin, max_bin, spacing) {
+	var result = new Array();
+	for(var i = min_bin; i < max_bin; i=i+spacing) { 
+		result.push(i);
+	}
+	return result;
+}
+	   
