@@ -330,7 +330,7 @@ function barChart(data) {
 	width = 400 - margin.left - margin.right,
 	height = 300 - margin.top - margin.bottom;
 
-	var bins = binning(data, "avspeed", "duration", 5, 0, 100);
+	var bins = binning(data, "avspeed", "duration", 5, 0, 130);
 	testBins = bins;
 	data = bins;
 	var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
