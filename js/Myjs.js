@@ -274,7 +274,7 @@ function testVis(data) {
 		.attr("stroke-width", 1.5)
 		.attr("d", line);
 }
-var testBins;
+ 
 // sample bar chart
 function barChart(data) {
 	data = cleanData(data);
@@ -284,6 +284,7 @@ function barChart(data) {
 
 	var bins = binning(data, "avspeed", "duration", 10, 0, 100);
 	testBins = bins;
+	data = bins;
 	var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
 	var y = d3.scaleLinear().range([height, 0]);
 	var xAxis = d3.axisBottom(x).ticks(10);
@@ -327,7 +328,7 @@ function barChart(data) {
 		.attr("height", function (d) { return height - y(d.y); })
 	.on("click", function(d) {
 		clearMap();
-		drawRS(d.bins);
+		DrawRS(d.bins);
 	})
 		.on("mouseover", function (d, i) {
 			svg.append("text")
