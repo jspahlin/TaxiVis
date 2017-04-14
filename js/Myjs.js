@@ -141,7 +141,21 @@ function bubbleBin(data, xd, yd) {
 	}
 	return resultArray;
 }
-
+function between(number, min, max) {
+	return number >= min && number <= max;
+}
+function rangeSelect(data, start, end, x_string) {
+	var min = Math.min([start,end]);
+	var max = Math.max([start,end]);
+	var resultArray = new Array();
+	for (var i = 0; i < data.length; ++i) {
+		var d = data[i];
+		if (between(d[x_string], min, max)) {
+			resultArray.push(d);
+		}
+	}
+	return resultArray;
+}
 ///
 //*******************************************************************************************************************************************************
 //*****************************************************************************************************************************************
@@ -260,19 +274,24 @@ function testVis(data) {
 		return a.duration - b.duration;
 	});
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
-	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300)
-	.on("dragstart", function (d) {
-		console.log(d);
-		console.log(d3.event);
-	}).attr("id", "testVis"),
-	margin = { top: 20, right: 20, bottom: 30, left: 50 },
-	width = +svg.attr("width") - margin.left - margin.right,
-	height = +svg.attr("height") - margin.top - margin.bottom,
-	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function (d) { console.log(d); });
+	var lineDragX = 0;
 	var x = d3.scaleTime()
 		.rangeRound([0, width]);
 	var y = d3.scaleLinear()
 		.rangeRound([height, 0]);
+	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300)
+	.on("dragstart", function (d) {
+		lineDragX = x.invert(d.x);
+	}).on("dragend", function(d) {
+		var endLineDragX = x.invert(d.x);
+		clearMap();
+		DrawRS(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
+	},
+	margin = { top: 20, right: 20, bottom: 30, left: 50 },
+	width = +svg.attr("width") - margin.left - margin.right,
+	height = +svg.attr("height") - margin.top - margin.bottom,
+	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function (d) { console.log(d); });
+
 	var line = d3.line()
 		.x(function (d) { return x(d.duration); })
 		.y(function (d) { return y(d.avspeed); });
