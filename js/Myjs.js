@@ -277,6 +277,22 @@ function barChart(data) {
 }
 
 
+
+
+
+
+// Given a number, tell us what bin it belongs to
+function bin(number, bin_size, min_bin, max_bin) {
+	var integer = Math.round(number);
+	var bin = Math.floor((integer - min_bin) / bin_size);
+	if(bin > Math.floor(max_bin/bin_size)) {
+		console.log("value " + integer + " is greater then largest bin" + max_bin + "!");
+		return max_bin;
+	}
+	return bin;
+}
+
+
 // Returns an array marking the start of the bin
 // min_bin and max_bin represent the start and end of the valid range.
 // spacing is the distance or size of the bins.
@@ -289,4 +305,37 @@ function makeBinArray(min_bin, max_bin, spacing) {
 	}
 	return result;
 }
-	   
+
+// returns {{x: xval, y: yval, bin:{object, ... }}, ... }
+// Data is the data to filter over
+// xd and yd are strings that point to member variable names (avspeed, etc)
+// min_bin and max_bin represent the start and end of the valid range.
+// spacing is the distance or size of the bins.
+function binning (data, xd, yd, spacing, min_bin, max_bin) {
+	var bins = makeBinArray(min_bin, max_bin, spacing);
+	var resultArray = new Array();
+	
+	for (var i = 0; i < bins.length; ++i) {
+		resultArray.push({
+			x: bins[i],
+			y: 0,
+			bin: new Array()
+		})
+	}
+	
+	// put objects in bins for x axis
+	for (var i = 0; i < data.length; ++i) {
+		var bin = bin(data[i][xd], spacing, min_bin, max_bin);
+		resultArray[bin]["bin"].push(data[i]);
+	}
+	
+	// determine y value.
+	for (var i = 0; i < resultArray.length; ++i) {
+		var sum = 0;
+		for(var j = 0; j < resultArray[i]["bin"].length; ++j) {
+			sum += resultArray[i]["bin"][j][yd];
+		}
+		resultArray[i]["y"] = resultArray[i]["bin"].length;
+	}
+	return resultArray;
+}
