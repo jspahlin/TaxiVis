@@ -66,7 +66,7 @@ map.addControl(drawControl); // To add anything to map, add it to "drawControl"
 
 
 // Given a number, tell us what bin it belongs to
-function bin(number, bin_size, min_bin, max_bin) {
+function binNumber(number, bin_size, min_bin, max_bin) {
 	var integer = Math.round(number);
 	var bin = Math.floor((integer - min_bin) / bin_size);
 	if(bin > Math.floor(max_bin/bin_size)) {
@@ -109,7 +109,7 @@ function binning (data, xd, yd, spacing, min_bin, max_bin) {
 	
 	// put objects in bins for x axis
 	for (var i = 0; i < data.length; ++i) {
-		var bin = bin(data[i][xd], spacing, min_bin, max_bin);
+		var bin = binNumber(data[i][xd], spacing, min_bin, max_bin);
 		resultArray[bin]["bin"].push(data[i]);
 	}
 	
