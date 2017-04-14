@@ -204,6 +204,7 @@ function clearMap() {
 var lineData;
 var barData;
 var scatterData;
+var bubbleData;
 
 map.on('draw:created', function (e) {
 	clearMap();
@@ -217,13 +218,15 @@ map.on('draw:created', function (e) {
         	//console.log(d.length);
         	barData = result;
         	lineData = result;
-			scatterData = result;
+        	scatterData = result;
+        	bubbleData = result;
 			
         	console.log(result); // Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
         	// update graphs when drawing a rectangle
         	testVis(lineData);
         	barChart(barData);
-			scatterPlot(scatterData);
+        	scatterPlot(scatterData);
+        	bubbleChart(bubbleData);
 			
         	DrawRS(result);
         });
@@ -463,3 +466,97 @@ d3.csv("data.csv", function(error, data) {
 }
 
 
+function bubbleChart(data) {
+
+	data = cleanData(data);
+
+
+	var TaxiCounter = {};
+
+	for (var i = 0; i < data.length; ++i) {
+		if (TaxiCounter.hasOwnProperty(data[i].taxiid)) {
+			TaxiCounter[data[i].taxiid] += 1;
+		}
+		else {
+			TaxiCounter[data[i].taxiid] = 1;
+		}
+	}
+	data = new Array();
+	for (var ThisTaxiID in TaxiCounter) {
+		var taxi = {};
+
+		taxi.id = ThisTaxiID;
+		taxi.value = TaxiCounter[ThisTaxiID];
+
+		data.push(taxi);
+	}
+
+
+	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
+
+	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg").attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
+	//margin = { top: 20, right: 20, bottom: 30, left: 50 },
+	width = +svg.attr("width"),// - margin.left - margin.right,
+	height = +svg.attr("height");// - margin.top - margin.bottom;
+	/*
+	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg")
+		.attr("width", width + margin.left + margin.right)
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	*/
+	var format = d3.format(",d");
+
+	var color = d3.scaleOrdinal(d3.schemeCategory20c);
+
+	var pack = d3.pack()
+		.size([width, height])
+		.padding(1.5);
+	/*
+	d3.csv("flare.csv", function (d) {
+		d.value = +d.value;
+		if (d.value) return d;
+	}, function (error, classes) {
+		if (error) throw error;
+*/
+	var root = d3.hierarchy({ children: data })
+	 .sum(function (d) { return d.value; })
+	 .each(function (d) {
+	 	if (id = d.data.id) {
+	 		//    var id, i = id.lastIndexOf(".");
+	 		d.id = id;
+	 		//    d.package = id.slice(0, i);
+	 		//    d.class = id.slice(i + 1);
+	 	}
+	 })
+	;
+
+	var node = svg.selectAll(".node")
+	  .data(pack(root).leaves())
+	  .enter().append("g")
+		.attr("class", "node")
+		.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+	node.append("circle")
+		.attr("id", function (d) { return d.id; })
+		.attr("r", function (d) { return d.r; })
+		.style("fill", function (d) { return color(d.id); });
+
+	node.append("clipPath")
+		.attr("id", function (d) { return "clip-" + d.id; })
+	  .append("use")
+		.attr("xlink:href", function (d) { return "#" + d.id; });
+	/*
+  node.append("text")
+      .attr("clip-path", function (d) { return "url(#clip-" + d.id + ")"; })
+    .selectAll("tspan")
+    .data(function (d) { return "Taxi: " + d.id; })
+    .enter().append("tspan")
+      .attr("x", 0)
+      .attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
+      .text(function(d) { return d; });
+	  */
+	node.append("title")
+		.text(function (d) { return "Taxi: " + d.id + "\n" + "Trips: " + format(d.value); });
+	//});
+}
