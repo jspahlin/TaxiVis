@@ -207,22 +207,16 @@ function testVis(data) {
 		.attr("stroke-width", 1.5)
 		.attr("d", line);
 }
+var testBins;
 // sample bar chart
 function barChart(data) {
 	data = cleanData(data);
 	var margin = { top: 20, right: 20, bottom: 70, left: 40 },
 	width = 400 - margin.left - margin.right,
 	height = 300 - margin.top - margin.bottom;
-	for (var i = 0; i < data.length; ++i) {
-		if (data[i].avspeed != null && data[i].duration != null) {
-			data[i].avspeed = Math.round(data[i].avspeed);
-			data[i].duration = Math.round(data[i].duration);
-		}
-	}
-	data = data.slice(1, 20);
-	data = data.sort(function (a, b) {
-		return a.avspeed - b.avspeed;
-	});
+
+	var bins = binning(data, "avspeed", "duration", 10, 0, 100);
+	testBins = bins;
 	var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
 	var y = d3.scaleLinear().range([height, 0]);
 	var xAxis = d3.axisBottom(x).ticks(10);
@@ -235,8 +229,8 @@ function barChart(data) {
 		.attr("transform",
 	"translate(" + margin.left + "," + margin.top + ")");
 	//x.domain(d3.extent(data, function(d) { return d.avspeed; }));
-	x.domain(data.map(function (d) { return d.avspeed; }));
-	y.domain(d3.extent(data, function (d) { return d.duration; }));
+	x.domain(data.map(function (d) { return d.x; }));
+	y.domain(d3.extent(data, function (d) { return d.y; }));
 	svg.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
@@ -260,10 +254,14 @@ function barChart(data) {
 		.data(data)
 		.enter().append("rect")
 		.style("fill", "steelblue")
-		.attr("x", function (d) { console.log([d.avspeed, d.duration]); return x(d.avspeed); })
+		.attr("x", function (d) { console.log([d.x, d.y]); return x(d.x); })
 		.attr("width", x.bandwidth())
-		.attr("y", function (d) { return y(d.duration); })
-		.attr("height", function (d) { return height - y(d.duration); })
+		.attr("y", function (d) { return y(d.y); })
+		.attr("height", function (d) { return height - y(d.y); })
+	.on("click", function(d) {
+		clearMap();
+		drawRS(d.bins);
+	})
 		.on("mouseover", function (d, i) {
 			svg.append("text")
             .attr("id", "t" + d.tripid)
