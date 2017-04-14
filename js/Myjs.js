@@ -124,6 +124,24 @@ function binning (data, xd, yd, spacing, min_bin, max_bin) {
 	return resultArray;
 }
 
+function bubbleBin(data, xd, yd) {
+	var resultArray = new Array;
+	var tempDict = {};
+	
+	for(var i = 0; i < data[i]; ++i) {
+		var taxiid = data[i].taxiid;
+		if (!tempDict[taxiid]) {
+			tempDict[taxiid] = new Array();
+		}
+		tempDict[taxiid].push(data[i]);
+	}
+	
+	for(key in tempDict) {
+		resultArray.push({taxiid: key, bin: tempDict[key]});	
+	}
+	return resultArray;
+}
+
 ///
 //*******************************************************************************************************************************************************
 //*****************************************************************************************************************************************
