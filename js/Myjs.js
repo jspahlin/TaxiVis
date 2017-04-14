@@ -282,7 +282,7 @@ function barChart(data) {
 	width = 400 - margin.left - margin.right,
 	height = 300 - margin.top - margin.bottom;
 
-	var bins = binning(data, "avspeed", "duration", 10, 0, 100);
+	var bins = binning(data, "avspeed", "duration", 5, 0, 100);
 	testBins = bins;
 	data = bins;
 	var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
@@ -328,7 +328,7 @@ function barChart(data) {
 		.attr("height", function (d) { return height - y(d.y); })
 	.on("click", function(d) {
 		clearMap();
-		DrawRS(d.bins);
+		DrawRS(d.bin);
 	})
 		.on("mouseover", function (d, i) {
 			svg.append("text")
