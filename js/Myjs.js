@@ -286,7 +286,7 @@ function testVis(data) {
 		var endLineDragX = x.invert(d.x);
 		clearMap();
 		DrawRS(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
-	},
+	}),
 	margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom,
