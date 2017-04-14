@@ -264,7 +264,7 @@ function testVis(data) {
 	.on("dragstart", function (d) {
 		console.log(d);
 		console.log(d3.event);
-	}.attr("id", "testVis"),
+	}).attr("id", "testVis"),
 	margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom,
