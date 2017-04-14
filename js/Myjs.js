@@ -207,7 +207,7 @@ map.on('draw:created', function (e) {
 			
         	console.log(result); // Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
         	// update graphs when drawing a rectangle
-        	//testVis(lineData);
+        	testVis(lineData);
         	barChart(barData);
 			scatterPlot(scatterData);
 			
@@ -260,7 +260,11 @@ function testVis(data) {
 		return a.duration - b.duration;
 	});
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
-	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300).attr("id", "testVis"),
+	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300)
+	.on("dragstart", function (d) {
+		console.log(d);
+		console.log(d3.event);
+	}.attr("id", "testVis"),
 	margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom,
