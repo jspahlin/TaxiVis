@@ -145,8 +145,8 @@ function between(number, min, max) {
 	return number >= min && number <= max;
 }
 function rangeSelect(data, start, end, x_string) {
-	var min = Math.min([start,end]);
-	var max = Math.max([start,end]);
+	var min = Math.min(start,end);
+	var max = Math.max(start,end);
 	var resultArray = new Array();
 	for (var i = 0; i < data.length; ++i) {
 		var d = data[i];
@@ -275,19 +275,23 @@ function testVis(data) {
 	});
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
 	var lineDragX = 0;
+
+	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300);
 	var margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom;
-	var x = d3.scaleTime()
+	var x = d3.scaleLinear()
 		.rangeRound([0, width]);
 	var y = d3.scaleLinear()
 		.rangeRound([height, 0]);
-	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300)
-	.on("dragstart", function (d) {
-		lineDragX = x.invert(d.x);
+	svg.on("dragstart", function (d) {
+		lineDragX = x.invert(d3.mouse(this)[0]);
 	}).on("dragend", function(d) {
-		var endLineDragX = x.invert(d.x);
+		var endLineDragX = x.invert(d3.mouse(this)[0]);
 		clearMap();
+		console.log(d3.mouse(this));
+		console.log([lineDragX,endLineDragX]);
+		console.log(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 		DrawRS(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 	}),
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function (d) { console.log(d); });
