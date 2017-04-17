@@ -615,6 +615,6 @@ function bubbleChart(data) {
       .text(function(d) { return d; });
 	 */ 
 	node.append("title")
-		.text(function (d) { return "Taxi: " + d.id + "\n" + "Trips: " + format(d.tripCount) + "\n Average Speed: " + format(d.avspeed); });
+		.text(function (d) { return "Taxi: " + d.id + "\nTrips: " + format(d.tripCount) + "\nAverage Speed: " + format(d.avspeed); });
 	//});
 }
