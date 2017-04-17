@@ -156,6 +156,21 @@ function rangeSelect(data, start, end, x_string) {
 	}
 	return resultArray;
 }
+
+function rangeSelect2D(data, x_start, x_end, x_string, y_start, y_end, y_string) {
+	var x_min = Math.min(x_start,x_end);
+	var x_max = Math.max(x_start,x_end);
+	var y_min = Math.min(y_start,y_end);
+	var y_max = Math.max(y_start,y_end);
+	var resultArray = new Array();
+	for (var i = 0; i < data.length; ++i) {
+		var d = data[i];
+		if (between(d[x_string], x_min, x_max) && between(d[y_string], y_min, y_max) {
+			resultArray.push(d);
+		}
+	}
+	return resultArray;
+}
 ///
 //*******************************************************************************************************************************************************
 //*****************************************************************************************************************************************
