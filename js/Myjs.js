@@ -523,8 +523,8 @@ function bubbleChart(data) {
 		data.push(taxi);
 	}
 	// set the dimensions and margins of the graph
-	var margin = { top: 20, right: 10, bottom: 10, left: 20 },
-		width = 400 - margin.left - margin.right,
+	var margin = { top: 20, right: 10, bottom: 10, left: 10 },
+		width = 500 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
 	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
@@ -593,7 +593,7 @@ function bubbleChart(data) {
 		svg.append("text")
 		.attr("id", "t" + d.id)
 		.text(function () {
-			return ["TaxiID: " + d.id, "Trip Count: " + d.tripCount, "Average Speed: " + d.avspeed];
+			return ["TaxiID: " + d.id, " Trip Count: " + d.tripCount, " Average Speed: " + d.avspeed];
 		});
 	})
 		.on("mouseout", function (d, i) {
