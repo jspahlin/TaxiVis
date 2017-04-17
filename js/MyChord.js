@@ -31,6 +31,7 @@ function makeSquareMatrix(size, initial_value) {
       matrix[i][j] = initial_value; 
     }
   }
+  return matrix;
 }
 
 // This does the dirty work of generating the matrix!
