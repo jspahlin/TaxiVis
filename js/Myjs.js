@@ -465,11 +465,11 @@ d3.csv("data.csv", function(error, data) {
      .call(d3.axisLeft(y));
 }
 
+//=========sample bubble chart=========
 
 function bubbleChart(data) {
 
 	data = cleanData(data);
-
 
 	var TaxiCounter = {};
 
@@ -484,42 +484,32 @@ function bubbleChart(data) {
 	data = new Array();
 	for (var ThisTaxiID in TaxiCounter) {
 		var taxi = {};
-
 		taxi.id = ThisTaxiID;
 		taxi.value = TaxiCounter[ThisTaxiID];
-
 		data.push(taxi);
 	}
-
-
 	// set the dimensions and margins of the graph
 	var margin = { top: 20, right: 10, bottom: 10, left: 20 },
-		width = 500 - margin.left - margin.right,
+		width = 400 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
-
 	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
-
 	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg")
 
-	
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	/*.attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
-	
-	
+
 	//margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width"),// - margin.left - margin.right,
 	height = +svg.attr("height");// - margin.top - margin.bottom;
 	*/
 	
 	var format = d3.format(",d");
-
 	var color = d3.scaleOrdinal(d3.schemeCategory20c);
-
 	var pack = d3.pack()
 		.size([width, height])
 		.padding(1.5);
