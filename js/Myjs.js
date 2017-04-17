@@ -535,13 +535,13 @@ function bubbleChart(data) {
 	 .each(function (d) {
 	 	if (id = d.data.id) {
 	 		//    var id, i = id.lastIndexOf(".");
-	 		d.id = id;
+	 		d.id = id%10000000;
 	 		//    d.package = id.slice(0, i);
 	 		//    d.class = id.slice(i + 1);
 	 	}
 	 })
 	;
-
+	
 	var node = svg.selectAll(".node")
 	  .data(pack(root).leaves())
 	  .enter().append("g")
@@ -551,7 +551,7 @@ function bubbleChart(data) {
 	node.append("circle")
 		.attr("id", function (d) { return d.id; })
 		.attr("r", function (d) { return d.r; })
-		.style("fill", function (d) { return color(d.id); })
+		.style("fill", function (d) { return  color(d.id); })
 	.on("click", function (d) {
 		clearMap();
 		DrawRS(d.bin);
