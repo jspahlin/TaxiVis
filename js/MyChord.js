@@ -24,9 +24,9 @@ function relevantStreets(data) {
 
 // makes a square matrix of the given size with all values set to initial_value.
 function makeSquareMatrix(size, initial_value) {
-  var matrix = [];
+  var matrix = new Array();
   for(var i = 0; i < size; ++i) {
-    matrix[i] = [];
+    matrix[i] = new Array();
     for(var j = 0; j < size; ++j) {
       matrix[i][j] = initial_value; 
     }
