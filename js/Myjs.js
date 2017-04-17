@@ -593,7 +593,7 @@ function bubbleChart(data) {
 		svg.append("text")
 		.attr("id", "t" + d.id)
 		.text(function () {
-			return ["TaxiID: " + d.id, "Trip Count: " + d.tripCount + " Average Speed: " + d.avspeed];
+			return ["TaxiID: " + d.id, "Trip Count: " + d.tripCount, "Average Speed: " + d.avspeed];
 		});
 	})
 		.on("mouseout", function (d, i) {
