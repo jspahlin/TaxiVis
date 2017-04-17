@@ -455,7 +455,7 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 		console.log([lineDragX,endLineDragX,lineDragY, endlineDragY]);
 		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
 		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
-	})*/
+	});
 /* // Get the data
 d3.csv("data.csv", function(error, data) {
   if (error) throw error;
