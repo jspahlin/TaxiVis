@@ -465,6 +465,7 @@ d3.csv("data.csv", function(error, data) {
      .call(d3.axisLeft(y));
 }
 
+
 ///// {{ taxiid: <number> bin: {<objs>...}}}
 //function bubbleParse(data) {
 //	var resultArray = new Array();
@@ -484,7 +485,6 @@ function bubbleChart(data) {
 
 	data = cleanData(data);
 
-
 	var TaxiCounter = {};
 
 	for (var i = 0; i < data.length; ++i) {
@@ -500,8 +500,8 @@ function bubbleChart(data) {
 	var MaxOverallAvSpeed = 0;
 	for (var ThisTaxiID in TaxiCounter) {
 		var taxi = {};
-
 		taxi.id = ThisTaxiID;
+
 		taxi.tripCount = TaxiCounter[ThisTaxiID].bin.length;
 		taxi.bin = TaxiCounter[ThisTaxiID].bin;
 		var TotalDistance = 0;
@@ -522,27 +522,21 @@ function bubbleChart(data) {
 
 		data.push(taxi);
 	}
-
-
 	// set the dimensions and margins of the graph
 	var margin = { top: 20, right: 10, bottom: 10, left: 20 },
-		width = 500 - margin.left - margin.right,
+		width = 400 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
-
 	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
-
 	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg")
 
-	
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	/*.attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
-	
-	
+
 	//margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width"),// - margin.left - margin.right,
 	height = +svg.attr("height");// - margin.top - margin.bottom;
