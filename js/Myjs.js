@@ -307,9 +307,9 @@ function testVis(data) {
 	}).on("dragend", function(d) {
 		var endLineDragX = x.invert(d3.mouse(this)[0]);
 		clearMap();
-		console.log(d3.mouse(this));
-		console.log([lineDragX,endLineDragX]);
-		console.log(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
+		//console.log(d3.mouse(this));
+		//console.log([lineDragX,endLineDragX]);
+		//console.log(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 		DrawRS(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 	}),
 	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function (d) { console.log(d); });
