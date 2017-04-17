@@ -492,19 +492,30 @@ function bubbleChart(data) {
 	}
 
 
+	// set the dimensions and margins of the graph
+	var margin = { top: 20, right: 10, bottom: 10, left: 20 },
+		width = 500 - margin.left - margin.right,
+		height = 600 - margin.top - margin.bottom;
+
+
 	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
 
-	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg").attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
+	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg")
+
+	
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+	.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+	/*.attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
+	
+	
 	//margin = { top: 20, right: 20, bottom: 30, left: 50 },
 	width = +svg.attr("width"),// - margin.left - margin.right,
 	height = +svg.attr("height");// - margin.top - margin.bottom;
-	/*
-	var svg = d3.select("body").select("div#rightside").select("div#bubblechart").append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-		.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 	*/
+	
 	var format = d3.format(",d");
 
 	var color = d3.scaleOrdinal(d3.schemeCategory20c);
@@ -540,7 +551,22 @@ function bubbleChart(data) {
 	node.append("circle")
 		.attr("id", function (d) { return d.id; })
 		.attr("r", function (d) { return d.r; })
-		.style("fill", function (d) { return color(d.id); });
+		.style("fill", function (d) { return color(d.id); })
+	.on("click", function (d) {
+		clearMap();
+		DrawRS(d.bin);
+	})
+
+	.on("mouseover", function (d, i) {
+		svg.append("text")
+		.attr("id", "t" + d.id)
+		.text(function () {
+			return ["TaxiID: "+ d.id, "Trip Count: " + d.value];
+		});
+	})
+		.on("mouseout", function (d, i) {
+			d3.select("#t" + d.id).remove();
+		});
 
 	node.append("clipPath")
 		.attr("id", function (d) { return "clip-" + d.id; })
@@ -555,7 +581,7 @@ function bubbleChart(data) {
       .attr("x", 0)
       .attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
       .text(function(d) { return d; });
-	  */
+	 */ 
 	node.append("title")
 		.text(function (d) { return "Taxi: " + d.id + "\n" + "Trips: " + format(d.value); });
 	//});
