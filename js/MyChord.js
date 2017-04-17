@@ -1,5 +1,10 @@
 // put our chord handling code here!
-
+function startingStreet(d) {
+  return d.streetnames[0];
+}
+function endingStreet(d) {
+  return d.streetnames[d.streetnames.length-1];
+}
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index; 
 }
@@ -9,15 +14,36 @@ function relevantStreets(data) {
   var resultArray = new Array();
   for(var i = 0; i < data.length; ++i) {
     var d = data[i];
-    var starting_street = d.streetnames[0];
-    var ending_street = d.streetnames[d.streetnames.length-1];
-    resultArray.push(starting_street);
-    resultArray.push(ending_street);
+    resultArray.push(startingStreet(d));
+    resultArray.push(endingStreet(d));
   }
   var result = resultArray.filter(onlyUnique);
   return result;
 }
 
+
+// makes a square matrix of the given size with all values set to initial_value.
+function makeSquareMatrix(size, initial_value) {
+  var matrix = [];
+  for(var i = 0; i < size; ++i) {
+    matrix[i] = [];
+    for(var j = 0; j < size; ++j) {
+      matrix[i][j] = initial_value; 
+    }
+  }
+}
+
+// This does the dirty work of generating the matrix!
+// All streets mentioned in data for starting and ending points must be passed through
+// in the streets parameter. Streets must be unique, no duplicates!
+function formMatrix(data, streets) {
+  var resultMatrix = makeSquareMatrix(streets.length, 0);
+  for (var i = 0; i < data.length; ++i) {
+    var d = data[i];
+    resultMatrix[streets.indexOf(startingStreet(d))][streets.indexOf(endingStreet(d))]++;
+  }
+  return resultMatrix;
+}
 // d3 code for chord
 
 <svg width="400" height="400"></svg>
