@@ -539,7 +539,7 @@ function bubbleChart(data) {
 	}
 	// set the dimensions and margins of the graph
 	var margin = { top: 20, right: 10, bottom: 10, left: 10 },
-		width = 500 - margin.left - margin.right,
+		width = 450 - margin.left - margin.right,
 		height = 600 - margin.top - margin.bottom;
 
 	d3.select("body").select("div#rightside").select("div#bubblechart").selectAll("*").remove();
