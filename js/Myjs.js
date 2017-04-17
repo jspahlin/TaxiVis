@@ -442,16 +442,19 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
     .attr("height", height + margin.top + margin.bottom)
 	.append("g")
     .attr("transform","translate(" + margin.left + "," + margin.top + ")");
-	/* for interaction 
+	var lineDragX = 0;
+	var lineDragY = 0;
 	svg.on("dragstart", function (d) {
 		lineDragX = x.invert(d3.mouse(this)[0]);
+		lineDragY = x.invert(d3.mouse(this)[1]);
 	}).on("dragend", function(d) {
 		var endLineDragX = x.invert(d3.mouse(this)[0]);
+		var endlineDragY = x.invert(d3.mouse(this)[1]);
 		clearMap();
-		//console.log(d3.mouse(this));
-		//console.log([lineDragX,endLineDragX]);
-		//console.log(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
-		DrawRS(rangeSelect2D(testVisData, lineDragX, endLineDragX, "duration", sy,ey, "property"));
+		console.log(d3.mouse(this));
+		console.log([lineDragX,endLineDragX,lineDragY, endlineDragY]);
+		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
+		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
 	})*/
 /* // Get the data
 d3.csv("data.csv", function(error, data) {
