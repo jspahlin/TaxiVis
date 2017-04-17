@@ -165,7 +165,7 @@ function rangeSelect2D(data, x_start, x_end, x_string, y_start, y_end, y_string)
 	var resultArray = new Array();
 	for (var i = 0; i < data.length; ++i) {
 		var d = data[i];
-		if (between(d[x_string], x_min, x_max) && between(d[y_string], y_min, y_max) {
+		if (between(d[x_string], x_min, x_max) && between(d[y_string], y_min, y_max)) {
 			resultArray.push(d);
 		}
 	}
