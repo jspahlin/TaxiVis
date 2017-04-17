@@ -46,8 +46,6 @@ function formMatrix(data, streets) {
 }
 // d3 code for chord
 
-<svg width="400" height="400"></svg>
-
 var matrix = [
   [11975,  5871, 8916, 2868],
   [ 1951, 10048, 2060, 6171],
