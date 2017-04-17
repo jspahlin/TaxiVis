@@ -53,7 +53,8 @@ var matrix = [
   [ 1013,   990,  940, 6907]
 ];
 
-var svg = d3.select("svg"),
+var svg = d3.select("body").select("div#rightside").select("div#chordchart").append("svg")
+	.attr("width", 400).attr("height", 300),
     width = +svg.attr("width"),
     height = +svg.attr("height"),
     outerRadius = Math.min(width, height) * 0.5 - 40,
