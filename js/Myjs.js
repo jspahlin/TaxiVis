@@ -465,7 +465,21 @@ d3.csv("data.csv", function(error, data) {
      .call(d3.axisLeft(y));
 }
 
+///// {{ taxiid: <number> bin: {<objs>...}}}
+//function bubbleParse(data) {
+//	var resultArray = new Array();
 
+
+	
+//}
+
+//for (var i = 0; i < array.length; ++i) {
+//	var d = array[i];
+//	d["trip_count"] = d["bin"].length;
+//}
+
+//clearMap()
+//drawRS(array.bin)
 function bubbleChart(data) {
 
 	data = cleanData(data);
@@ -474,19 +488,37 @@ function bubbleChart(data) {
 	var TaxiCounter = {};
 
 	for (var i = 0; i < data.length; ++i) {
-		if (TaxiCounter.hasOwnProperty(data[i].taxiid)) {
-			TaxiCounter[data[i].taxiid] += 1;
+		if (! TaxiCounter.hasOwnProperty(data[i].taxiid)) {
+			TaxiCounter[data[i].taxiid] = {};
+			TaxiCounter[data[i].taxiid].bin = new Array();
+			//TaxiCounter[data[i].taxiid].tripCount += 1;
 		}
-		else {
-			TaxiCounter[data[i].taxiid] = 1;
-		}
+		
+		TaxiCounter[data[i].taxiid].bin.push(data[i]);
 	}
 	data = new Array();
+	var MaxOverallAvSpeed = 0;
 	for (var ThisTaxiID in TaxiCounter) {
 		var taxi = {};
 
 		taxi.id = ThisTaxiID;
-		taxi.value = TaxiCounter[ThisTaxiID];
+		taxi.tripCount = TaxiCounter[ThisTaxiID].bin.length;
+		taxi.bin = TaxiCounter[ThisTaxiID].bin;
+		var TotalDistance = 0;
+		var TotalDuration = 0;
+		for (var i = 0; i < TaxiCounter[ThisTaxiID].bin.length; ++i)
+		{
+			TotalDistance += (TaxiCounter[ThisTaxiID].bin[i].avspeed * TaxiCounter[ThisTaxiID].bin[i].duration);
+			TotalDuration += TaxiCounter[ThisTaxiID].bin[i].duration;
+		}
+		if (TotalDuration > 0) {
+			taxi.avspeed = TotalDistance / TotalDuration;
+		}
+		else { taxi.avspeed = 0; }
+		if (taxi.avspeed > MaxOverallAvSpeed)
+		{
+			MaxOverallAvSpeed = taxi.avspeed;
+		}
 
 		data.push(taxi);
 	}
@@ -518,7 +550,10 @@ function bubbleChart(data) {
 	
 	var format = d3.format(",d");
 
-	var color = d3.scaleOrdinal(d3.schemeCategory20c);
+	//var color = d3.scaleOrdinal(d3.schemeCategory20c);
+	var color = d3.scaleLinear()
+	 .domain([0, MaxOverallAvSpeed])
+	  .range(["red", "green"]);
 
 	var pack = d3.pack()
 		.size([width, height])
@@ -531,11 +566,14 @@ function bubbleChart(data) {
 		if (error) throw error;
 */
 	var root = d3.hierarchy({ children: data })
-	 .sum(function (d) { return d.value; })
+	 .sum(function (d) { return d.tripCount; })
 	 .each(function (d) {
 	 	if (id = d.data.id) {
 	 		//    var id, i = id.lastIndexOf(".");
-	 		d.id = id%10000000;
+	 		d.id = id % 10000000;
+	 		d.bin = d.data.bin;
+	 		d.avspeed = d.data.avspeed;
+	 		d.tripCount = d.data.tripCount;
 	 		//    d.package = id.slice(0, i);
 	 		//    d.class = id.slice(i + 1);
 	 	}
@@ -551,7 +589,7 @@ function bubbleChart(data) {
 	node.append("circle")
 		.attr("id", function (d) { return d.id; })
 		.attr("r", function (d) { return d.r; })
-		.style("fill", function (d) { return  color(d.id); })
+		.style("fill", function (d) { return color(d.avspeed); })
 	.on("click", function (d) {
 		clearMap();
 		DrawRS(d.bin);
@@ -561,7 +599,7 @@ function bubbleChart(data) {
 		svg.append("text")
 		.attr("id", "t" + d.id)
 		.text(function () {
-			return ["TaxiID: "+ d.id, "Trip Count: " + d.value];
+			return ["TaxiID: " + d.id, "Trip Count: " + d.tripCount + " Average Speed: " + d.avspeed];
 		});
 	})
 		.on("mouseout", function (d, i) {
@@ -583,6 +621,6 @@ function bubbleChart(data) {
       .text(function(d) { return d; });
 	 */ 
 	node.append("title")
-		.text(function (d) { return "Taxi: " + d.id + "\n" + "Trips: " + format(d.value); });
+		.text(function (d) { return "Taxi: " + d.id + "\n" + "Trips: " + format(d.tripCount) + "\n Average Speed: " + format(d.avspeed); });
 	//});
 }
