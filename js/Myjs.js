@@ -70,7 +70,6 @@ function binNumber(number, bin_size, min_bin, max_bin) {
 	var integer = Math.round(number);
 	var bin = Math.floor((integer - min_bin) / bin_size);
 	if(bin > Math.floor(max_bin/bin_size)) {
-		console.log("value " + integer + " is greater then largest bin" + max_bin + "!");
 		return max_bin;
 	}
 	return bin;
@@ -230,13 +229,13 @@ map.on('draw:created', function (e) {
 		rt.data([[bounds.getSouthWest().lng, bounds.getSouthWest().lat], [bounds.getNorthEast().lng, bounds.getNorthEast().lat]]).
         then(function (d) {
         	var result = d.map(function (a) { return a.properties; });
-        	//console.log(d.length);
+        	
         	barData = result;
         	lineData = result;
         	scatterData = result;
         	bubbleData = result;
 			
-        	console.log(result); // Trip Info: avspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames, taxiid, tripid
+      
         	// update graphs when drawing a rectangle
         	testVis(lineData);
         	barChart(barData);
@@ -280,7 +279,7 @@ function cleanData(d) {
 			newArray.push(d[i]);
 		}
 	}
-	//console.log(newArray);
+	
 	return newArray;
 }
 function testVis(data) {
@@ -307,12 +306,9 @@ function testVis(data) {
 	}).on("dragend", function(d) {
 		var endLineDragX = x.invert(d3.mouse(this)[0]-margin.top);
 		clearMap();
-		//console.log(d3.mouse(this));
-		//console.log([lineDragX,endLineDragX]);
-		//console.log(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 		DrawRS(rangeSelect(testVisData, lineDragX, endLineDragX, "duration"));
 	}),
-	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")").on("click", function (d) { console.log(d); });
+	g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	var line = d3.line()
 		.x(function (d) { return x(d.duration); })
@@ -392,7 +388,7 @@ function barChart(data) {
 		.data(data)
 		.enter().append("rect")
 		.style("fill", "steelblue")
-		.attr("x", function (d) { console.log([d.x, d.y]); return x(d.x); })
+		.attr("x", function (d) { return x(d.x); })
 		.attr("width", x.bandwidth())
 		.attr("y", function (d) { return y(d.y); })
 		.attr("height", function (d) { return height - y(d.y); })
@@ -444,17 +440,12 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 	.on("dragstart", function (d) {
-		console.log(d3.mouse(this));
-		console.log("dragstart");
 		lineDragX = x.invert(d3.mouse(this)[0]-margin.left);
 		lineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 	}).on("dragend", function(d) {
 		var endLineDragX = x.invert(d3.mouse(this)[0]-margin.left);
 		var endlineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 		clearMap();
-		console.log(d3.mouse(this));
-		console.log([lineDragX,endLineDragX,lineDragY, endlineDragY]);
-		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
 		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
 	})
 	.append("g")
