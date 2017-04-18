@@ -424,7 +424,7 @@ var margin = {top: 20, right: 20, bottom: 30, left: 50},
     height = 300 - margin.top - margin.bottom;
 
 // set the ranges
-var x = d3.scaleTime().range([0, width]);
+var x = d3.scaleLinear().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
 
 // define the line
@@ -437,14 +437,15 @@ var valueline = d3.line()
 // moves the 'group' element to the top left margin
 
 d3.select("body").select("div#rightside").select("div#scatterplot").selectAll("*").remove();
+var lineDragX = 0;
+	var lineDragY = 0;
+	
 var svg = d3.select("body").select("div#rightside").select("div#scatterplot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-	.append("g")
-    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
-	var lineDragX = 0;
-	var lineDragY = 0;
-	svg.on("dragstart", function (d) {
+	.on("dragstart", function (d) {
+		console.log(d3.mouse(this));
+		console.log("dragstart");
 		lineDragX = x.invert(d3.mouse(this)[0]);
 		lineDragY = x.invert(d3.mouse(this)[1]);
 	}).on("dragend", function(d) {
@@ -453,9 +454,12 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 		clearMap();
 		console.log(d3.mouse(this));
 		console.log([lineDragX,endLineDragX,lineDragY, endlineDragY]);
-		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
-		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "property"));
+		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
+		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
 	});
+	svg.append("g")
+    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+	
 /* // Get the data
 d3.csv("data.csv", function(error, data) {
   if (error) throw error;
