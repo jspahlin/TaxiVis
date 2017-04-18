@@ -303,9 +303,9 @@ function testVis(data) {
 	var y = d3.scaleLinear()
 		.rangeRound([height, 0]);
 	svg.on("dragstart", function (d) {
-		lineDragX = x.invert(d3.mouse(this)[0]);
+		lineDragX = x.invert(d3.mouse(this)[0]-margin.left);
 	}).on("dragend", function(d) {
-		var endLineDragX = x.invert(d3.mouse(this)[0]);
+		var endLineDragX = x.invert(d3.mouse(this)[0]-margin.top);
 		clearMap();
 		//console.log(d3.mouse(this));
 		//console.log([lineDragX,endLineDragX]);
@@ -446,19 +446,20 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 	.on("dragstart", function (d) {
 		console.log(d3.mouse(this));
 		console.log("dragstart");
-		lineDragX = x.invert(d3.mouse(this)[0]);
-		lineDragY = x.invert(d3.mouse(this)[1]);
+		lineDragX = x.invert(d3.mouse(this)[0]-margin.left);
+		lineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 	}).on("dragend", function(d) {
-		var endLineDragX = x.invert(d3.mouse(this)[0]);
-		var endlineDragY = x.invert(d3.mouse(this)[1]);
+		var endLineDragX = x.invert(d3.mouse(this)[0]-margin.left);
+		var endlineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 		clearMap();
 		console.log(d3.mouse(this));
 		console.log([lineDragX,endLineDragX,lineDragY, endlineDragY]);
 		console.log(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
 		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
-	});
-	svg.append("g")
-    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+	})
+	.append("g")
+    .attr("transform","translate(" + margin.left + "," + margin.top + ")")
+	;
 	
 /* // Get the data
 d3.csv("data.csv", function(error, data) {
