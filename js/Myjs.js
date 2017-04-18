@@ -486,7 +486,11 @@ d3.csv("data.csv", function(error, data) {
      .enter().append("circle")
      .attr("r", 5)
      .attr("cx", function(d) { return x(d.duration); })
-     .attr("cy", function(d) { return y(d.avspeed); });
+     .attr("cy", function(d) { return y(d.avspeed); })
+	 .on("click", function(d) {
+		 clearMap();
+		 DrawRS([d]);
+	 });
   
   // add the X Axis
   svg.append("g")
