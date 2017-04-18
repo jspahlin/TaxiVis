@@ -215,11 +215,21 @@ function clearMap() {
 // Click the small box on Map and start drawing to do query.
 //***************************************************************************************************************************************** 
 
-var lineData;
-var barData;
-var scatterData;
-var bubbleData;
+var displayed_data;
 
+function updateVisualizations(data) {
+	displayed_data = data;
+	testVis(data);
+    barChart(data);
+    scatterPlot(data);
+    bubbleChart(data);
+	if(data.length < 50) {
+		chordVis(data);
+	}
+}
+function reduceRoutes() {
+	updateVisualizations(displayed_data);
+}
 map.on('draw:created', function (e) {
 	clearMap();
 	var type = e.layerType,
@@ -230,17 +240,8 @@ map.on('draw:created', function (e) {
         then(function (d) {
         	var result = d.map(function (a) { return a.properties; });
         	
-        	barData = result;
-        	lineData = result;
-        	scatterData = result;
-        	bubbleData = result;
-			
-      
         	// update graphs when drawing a rectangle
-        	testVis(lineData);
-        	barChart(barData);
-        	scatterPlot(scatterData);
-        	bubbleChart(bubbleData);
+			updateVisualizations(result);
 			
         	DrawRS(result);
         });
@@ -253,6 +254,7 @@ map.on('draw:created', function (e) {
 // Input is a list of Trip and the function draw these trips on Map based on their IDs
 //*****************************************************************************************************************************************
 function DrawRS(trips) {
+	displayed_data = trips; // modification to allow reductions across visualizations.
 	for (var j = 0; j < trips.length; j++) { // Check Number of Segments and go through all segments
 		var TPT = new Array();
 		TPT = TArr[trips[j].tripid].split(','); // Find each segment in TArr Dictionary. 
