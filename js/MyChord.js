@@ -94,7 +94,7 @@ function chordVis(data) {
   [ 1013,   990,  940, 6907]
 ];*/
 var matrix = streetMatrix;
-
+d3.select("body").select("div#rightside").select("div#chordchart").selectAll("*").remove();
 var svg = d3.select("body").select("div#rightside").select("div#chordchart").append("svg")
 	.attr("width", 400).attr("height", 400),
     width = +svg.attr("width"),
