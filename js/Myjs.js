@@ -223,11 +223,13 @@ function updateVisualizations(data) {
     barChart(data);
     scatterPlot(data);
     bubbleChart(data);
+	console.log('Length', data.length)
 	if(data.length < 50) {
 		chordVis(data);
 	}
 }
 function reduceRoutes() {
+	console.log('Called Function')
 	updateVisualizations(displayed_data);
 }
 map.on('draw:created', function (e) {
@@ -281,7 +283,6 @@ function cleanData(d) {
 			newArray.push(d[i]);
 		}
 	}
-	
 	return newArray;
 }
 function testVis(data) {
@@ -367,6 +368,7 @@ function barChart(data) {
 	//x.domain(d3.extent(data, function(d) { return d.avspeed; }));
 	x.domain(data.map(function (d) { return d.x; }));
 	y.domain(d3.extent(data, function (d) { return d.y; }));
+	
 	svg.append("g")
 		.attr("class", "x axis")
 		.attr("transform", "translate(0," + height + ")")
@@ -376,6 +378,7 @@ function barChart(data) {
 		.attr("dx", "-.8em")
 		.attr("dy", "-.55em")
 		.attr("transform", "rotate(-90)");
+		
 	svg.append("g")
 		.attr("class", "y axis")
 		.call(yAxis)
@@ -385,7 +388,8 @@ function barChart(data) {
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text("Duration")//"Value ($)")
-		.attr("fill", "red");
+		.attr("fill", "black");
+		
 	svg.selectAll("bar")
 		.data(data)
 		.enter().append("rect")

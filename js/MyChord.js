@@ -80,6 +80,7 @@ function reverseMatrixLookup(matrix, streets, index, value, data) {
 // d3 code for chord
 var chordData;
 var streetMatrix;
+
 function chordVis(data) {
 	chordData = data;
 	var streets = relevantStreets(data);
