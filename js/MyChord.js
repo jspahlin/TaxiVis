@@ -159,7 +159,6 @@ groupTick
     .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
     .text(function(d) { return formatValue(d.value); });
 	
-
 g.append("g")
     .attr("class", "ribbons")
   .selectAll("path")
