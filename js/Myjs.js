@@ -223,7 +223,7 @@ function updateVisualizations(data) {
     barChart(data);
     scatterPlot(data);
     bubbleChart(data);
-	console.log('Length', data.length)
+	//console.log('Length', data.length)
 	if(data.length < 50) {
 		chordVis(data);
 	}
@@ -241,10 +241,9 @@ map.on('draw:created', function (e) {
 		rt.data([[bounds.getSouthWest().lng, bounds.getSouthWest().lat], [bounds.getNorthEast().lng, bounds.getNorthEast().lat]]).
         then(function (d) {
         	var result = d.map(function (a) { return a.properties; });
-        	
+			
         	// update graphs when drawing a rectangle
 			updateVisualizations(result);
-			
         	DrawRS(result);
         });
 	}
@@ -296,8 +295,8 @@ function testVis(data) {
 	d3.select("body").select("div#rightside").select("div#linechart").selectAll("*").remove();
 	var lineDragX = 0;
 
-	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 300);
-	var margin = { top: 20, right: 20, bottom: 30, left: 50 },
+	var svg = d3.select("body").select("div#rightside").select("div#linechart").append("svg").attr("width", 400).attr("height", 400);
+	var margin = { top: 20, right: 20, bottom: 70, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom;
 	var x = d3.scaleLinear()
@@ -316,15 +315,26 @@ function testVis(data) {
 	var line = d3.line()
 		.x(function (d) { return x(d.duration); })
 		.y(function (d) { return y(d.avspeed); });
+		
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
+	
 	x.domain(d3.extent(data, function (d) { return d.duration; }));
 	y.domain(d3.extent(data, function (d) { return d.avspeed; }));
+	
 	g.append("g")
 		.attr("transform", "translate(0," + height + ")")
-		.call(d3.axisBottom(x))
-		.select(".domain")
-		.remove();
+		.call(d3.axisBottom(x));
+	
+	svg.append("text")
+		.attr("class", "label")
+		.attr("x", width - 100)
+		.attr("y", height + 50)
+		.style("text-anchor", "middle")
+		.text("Avgspeed")
+		.attr("fill", "black")
+		.style("font-size", "11px");
+	
 	g.append("g")
 		.call(d3.axisLeft(y))
 		.append("text")
@@ -333,7 +343,9 @@ function testVis(data) {
 		.attr("y", 6)
 		.attr("dy", "0.71em")
 		.attr("text-anchor", "end")
-		.text("Price ($)");
+		.text("Duration")
+		.style("font-size", "11px");
+		
 	g.append("path")
 		.datum(data)
 		.attr("fill", "none")
@@ -349,7 +361,7 @@ function barChart(data) {
 	data = cleanData(data);
 	var margin = { top: 20, right: 20, bottom: 70, left: 40 },
 	width = 400 - margin.left - margin.right,
-	height = 300 - margin.top - margin.bottom;
+	height = 400 - margin.top - margin.bottom;
 
 	var bins = binning(data, "avspeed", "duration", 5, 0, 130);
 	testBins = bins;
@@ -378,6 +390,15 @@ function barChart(data) {
 		.attr("dx", "-.8em")
 		.attr("dy", "-.55em")
 		.attr("transform", "rotate(-90)");
+	
+	svg.append("text")
+		.attr("class", "label")
+		.attr("x", width/2)
+		.attr("y", height + 35)
+		.style("text-anchor", "middle")
+		.text("Avgspeed")
+		.attr("fill", "black")
+		.style("font-size", "11px");
 		
 	svg.append("g")
 		.attr("class", "y axis")
@@ -388,7 +409,8 @@ function barChart(data) {
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text("Duration")//"Value ($)")
-		.attr("fill", "black");
+		.attr("fill", "black")
+		.style("font-size", "11px");
 		
 	svg.selectAll("bar")
 		.data(data)
@@ -423,7 +445,7 @@ function scatterPlot(data){
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 400 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    height = 400 - margin.top - margin.bottom;
 
 // set the ranges
 var x = d3.scaleLinear().range([0, width]);
@@ -492,11 +514,27 @@ d3.csv("data.csv", function(error, data) {
   // add the X Axis
   svg.append("g")
      .attr("transform", "translate(0," + height + ")")
-     .call(d3.axisBottom(x));
-  
+     .call(d3.axisBottom(x))
+	 .append("text")
+     .attr("class", "label")
+     .attr("x", width/2)
+     .attr("y", 30)
+     .style("text-anchor", "middle")
+     .text("Duration")
+	 .attr("fill", "black")
+	 .style("font-size", "11px");
+	
   // add the Y Axis
   svg.append("g")
-     .call(d3.axisLeft(y));
+     .call(d3.axisLeft(y))
+	 .append("text")
+	 .attr("transform", "rotate(-90)")
+	 .attr("y", 0 - margin.left)
+	 .attr("x", 0 - (height / 2))
+	 .attr("dy", "2em")
+	 .style("text-anchor", "middle")
+	 .text("Avgspeed")
+	 .attr("fill", "black");
 }
 
 
