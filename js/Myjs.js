@@ -461,13 +461,14 @@ var valueline = d3.line()
 // moves the 'group' element to the top left margin
 
 d3.select("body").select("div#rightside").select("div#scatterplot").selectAll("*").remove();
-var lineDragX = 0;
-	var lineDragY = 0;
+
+//var lineDragX = 0;
+//var lineDragY = 0;
 	
 var svg = d3.select("body").select("div#rightside").select("div#scatterplot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-	.on("dragstart", function (d) {
+	/*.on("dragstart", function (d) {
 		lineDragX = x.invert(d3.mouse(this)[0]-margin.left);
 		lineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 	}).on("dragend", function(d) {
@@ -475,7 +476,7 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 		var endlineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 		clearMap();
 		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
-	})
+	})*/
 	.append("g")
     .attr("transform","translate(" + margin.left + "," + margin.top + ")")
 	;
