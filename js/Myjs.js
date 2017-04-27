@@ -245,6 +245,7 @@ map.on('draw:created', function (e) {
         	// update graphs when drawing a rectangle
 			updateVisualizations(result);
         	DrawRS(result);
+			console.log(result);
         });
 	}
 	drawnItems.addLayer(layer); //Add your Selection to Map 
@@ -357,13 +358,14 @@ function testVis(data) {
 }
  
 // sample bar chart
+
 function barChart(data) {
 	data = cleanData(data);
 	var margin = { top: 20, right: 20, bottom: 70, left: 40 },
 	width = 400 - margin.left - margin.right,
 	height = 400 - margin.top - margin.bottom;
 
-	var bins = binning(data, "avspeed", "duration", 5, 0, 130);
+	var bins = binning(data, "avspeed", "distance", 5, 0, 130);
 	testBins = bins;
 	data = bins;
 	var x = d3.scaleBand().rangeRound([0, width]).padding(0.2);
@@ -408,7 +410,7 @@ function barChart(data) {
 		.attr("y", 6)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Duration")//"Value ($)")
+		.text("Distance")//"Value ($)")
 		.attr("fill", "black")
 		.style("font-size", "11px");
 		
