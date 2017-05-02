@@ -309,15 +309,15 @@ function testVis(data) {
 
 	var line = d3.line()
 		.x(function (d) { return x(d.duration); })
-		.y(function (d) { return y(d.maxspeed); });
-	var line2 = d3.line()
+		.y(function (d) { return y(d.distance); });
+	/*var line2 = d3.line()
 		.x(function (d) { return x(d.duration); })
-		.y(function (d) { return y(d.minspeed); });	
+		.y(function (d) { return y(d.minspeed); });	*/
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
 	
 	x.domain(d3.extent(data, function (d) { return d.duration; }));
-	y.domain(d3.extent(data, function (d) { return d.maxspeed; }));
+	y.domain(d3.extent(data, function (d) { return d.distance; }));
 	
 	g.append("g")
 		.attr("transform", "translate(0," + height + ")")
@@ -328,7 +328,7 @@ function testVis(data) {
 		.attr("x", width - 100)
 		.attr("y", height + 50)
 		.style("text-anchor", "middle")
-		.text("Avgspeed")
+		.text("Distance(miles)")
 		.attr("fill", "black")
 		.style("font-size", "11px");
 	
@@ -340,7 +340,7 @@ function testVis(data) {
 		.attr("y", 6)
 		.attr("dy", "0.71em")
 		.attr("text-anchor", "end")
-		.text("Duration")
+		.text("Duration(mins)")
 		.style("font-size", "11px");
 		
 	g.append("path")
@@ -351,14 +351,14 @@ function testVis(data) {
 		.attr("stroke-linecap", "round")
 		.attr("stroke-width", 1.5)
 		.attr("d", line);
-	g.append("path")
+	/*g.append("path")
 		.datum(data)
 		.attr("fill", "none")
 		.attr("stroke", "steelblue")
 		.attr("stroke-linejoin", "round")
 		.attr("stroke-linecap", "round")
 		.attr("stroke-width", 1.5)
-		.attr("d", line2);
+		.attr("d", line2);*/
 }
  
 // sample bar chart
