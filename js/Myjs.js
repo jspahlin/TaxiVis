@@ -408,7 +408,7 @@ function barChart(data) {
 		.attr("x", width/2)
 		.attr("y", height + 35)
 		.style("text-anchor", "middle")
-		.text("Avgspeed")
+		.text("Speed(mph)")
 		.attr("fill", "black")
 		.style("font-size", "11px");
 		
@@ -420,7 +420,7 @@ function barChart(data) {
 		.attr("y", 6)
 		.attr("dy", ".71em")
 		.style("text-anchor", "end")
-		.text("Distance")//"Value ($)")
+		.text("Distance(miles)")//"Value ($)")
 		.attr("fill", "black")
 		.style("font-size", "11px");
 		
@@ -474,13 +474,13 @@ var valueline = d3.line()
 
 d3.select("body").select("div#rightside").select("div#scatterplot").selectAll("*").remove();
 
-//var lineDragX = 0;
-//var lineDragY = 0;
+var lineDragX = 0;
+var lineDragY = 0;
 	
 var svg = d3.select("body").select("div#rightside").select("div#scatterplot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-	/*.on("dragstart", function (d) {
+	.on("dragstart", function (d) {
 		lineDragX = x.invert(d3.mouse(this)[0]-margin.left);
 		lineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 	}).on("dragend", function(d) {
@@ -488,7 +488,7 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 		var endlineDragY = y.invert(d3.mouse(this)[1]-margin.top);
 		clearMap();
 		DrawRS(rangeSelect2D(data, lineDragX, endLineDragX, "duration", lineDragY, endlineDragY, "avspeed"));
-	})*/
+	})
 	.append("g")
     .attr("transform","translate(" + margin.left + "," + margin.top + ")")
 	;
@@ -533,7 +533,7 @@ d3.csv("data.csv", function(error, data) {
      .attr("x", width/2)
      .attr("y", 30)
      .style("text-anchor", "middle")
-     .text("Duration")
+     .text("Duration(mins)")
 	 .attr("fill", "black")
 	 .style("font-size", "11px");
 	
@@ -546,7 +546,7 @@ d3.csv("data.csv", function(error, data) {
 	 .attr("x", 0 - (height / 2))
 	 .attr("dy", "2em")
 	 .style("text-anchor", "middle")
-	 .text("Avgspeed")
+	 .text("Speed(mph)")
 	 .attr("fill", "black");
 }
 
