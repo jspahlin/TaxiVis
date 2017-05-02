@@ -503,7 +503,7 @@ d3.csv("data.csv", function(error, data) {
   }); */
   
   // scale the range of the data
-  x.domain(d3.extent(data, function(d) { return d.duration; }));
+  x.domain(d3.extent(data, function(d) { return d.duration/=100; }));
   y.domain([0, d3.max(data, function(d) { return d.avspeed; })]);
   
   // add the valueline path.
