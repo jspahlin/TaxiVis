@@ -62,9 +62,6 @@ map.addControl(drawControl); // To add anything to map, add it to "drawControl"
 /// LIBRARY CODE FOR OUR VISUALIZATIONS
 ///
 
-
-
-
 // Given a number, tell us what bin it belongs to
 function binNumber(number, bin_size, min_bin, max_bin) {
 	var integer = Math.round(number);
@@ -74,7 +71,6 @@ function binNumber(number, bin_size, min_bin, max_bin) {
 	}
 	return bin;
 }
-
 
 // Returns an array marking the start of the bin
 // min_bin and max_bin represent the start and end of the valid range.
@@ -105,13 +101,11 @@ function binning (data, xd, yd, spacing, min_bin, max_bin) {
 			bin: new Array()
 		})
 	}
-	
 	// put objects in bins for x axis
 	for (var i = 0; i < data.length; ++i) {
 		var bin = binNumber(data[i][xd], spacing, min_bin, max_bin);
 		resultArray[bin]["bin"].push(data[i]);
-	}
-	
+	}	
 	// determine y value.
 	for (var i = 0; i < resultArray.length; ++i) {
 		var sum = 0;
@@ -277,7 +271,7 @@ function DrawRS(trips) {
 var testVisData;
 function cleanData(d) {
 	var newArray = new Array();
-	//if (d == null) { return newArray; }
+	
 	for (var i = 0; i < d.length; ++i) {
 		if (d[i].duration != null && d[i].avspeed != null) {
 			newArray.push(d[i]);
@@ -436,16 +430,16 @@ function barChart(data) {
 		clearMap();
 		DrawRS(d.bin);
 	})
-		.on("mouseover", function (d, i) {
-			svg.append("text")
-            .attr("id", "t" + d.tripid)
-            .text(function () {
-            	return ["TaxiID: " + d.taxiid, "TripID: " + d.tripid];
-            });
-		})
-		.on("mouseout", function (d, i) {
-			d3.select("#t" + d.tripid).remove();
-		});
+	.on("mouseover", function (d, i) {
+		svg.append("text")
+        .attr("id", "t" + d.tripid)
+        .text(function () {
+           return ["TaxiID: " + d.taxiid, "TripID: " + d.tripid];
+        });
+	})
+	.on("mouseout", function (d, i) {
+		d3.select("#t" + d.tripid).remove();
+	});
 }
 
 //=========sample scatterplot graph=========
@@ -472,11 +466,10 @@ var valueline = d3.line()
 // appends a 'group' element to 'svg'
 // moves the 'group' element to the top left margin
 
-d3.select("body").select("div#rightside").select("div#scatterplot").selectAll("*").remove();
-
 var lineDragX = 0;
 var lineDragY = 0;
-	
+
+d3.select("body").select("div#rightside").select("div#scatterplot").selectAll("*").remove();
 var svg = d3.select("body").select("div#rightside").select("div#scatterplot").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -492,25 +485,10 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 	.append("g")
     .attr("transform","translate(" + margin.left + "," + margin.top + ")")
 	;
-	
-/* // Get the data
-d3.csv("data.csv", function(error, data) {
-  if (error) throw error;
-  // format the data
-  data.forEach(function(d) {
-      d.date = parseTime(d.date);
-      d.close = +d.close;
-  }); */
-  
+
   // scale the range of the data
   x.domain(d3.extent(data, function(d) { return d.duration/=100; }));
   y.domain([0, d3.max(data, function(d) { return d.avspeed; })]);
-  
-  // add the valueline path.
-  /*svg.append("path")
-     .data([data])
-     .attr("class", "line")
-     .attr("d", valueline);*/
   
   // add the dots
   svg.selectAll("dot")
@@ -550,35 +528,19 @@ d3.csv("data.csv", function(error, data) {
 	 .attr("fill", "black");
 }
 
+// sample bubble chart
 
-///// {{ taxiid: <number> bin: {<objs>...}}}
-//function bubbleParse(data) {
-//	var resultArray = new Array();
-
-
-	
-//}
-
-//for (var i = 0; i < array.length; ++i) {
-//	var d = array[i];
-//	d["trip_count"] = d["bin"].length;
-//}
-
-//clearMap()
-//drawRS(array.bin)
 function bubbleChart(data) {
-
+	
 	data = cleanData(data);
-
 	var TaxiCounter = {};
-
+	
 	for (var i = 0; i < data.length; ++i) {
 		if (! TaxiCounter.hasOwnProperty(data[i].taxiid)) {
 			TaxiCounter[data[i].taxiid] = {};
 			TaxiCounter[data[i].taxiid].bin = new Array();
 			//TaxiCounter[data[i].taxiid].tripCount += 1;
 		}
-		
 		TaxiCounter[data[i].taxiid].bin.push(data[i]);
 	}
 	data = new Array();
@@ -604,9 +566,9 @@ function bubbleChart(data) {
 		{
 			MaxOverallAvSpeed = taxi.avspeed;
 		}
-
 		data.push(taxi);
 	}
+	
 	// set the dimensions and margins of the graph
 	var margin = { top: 20, right: 10, bottom: 10, left: 10 },
 		width = 450 - margin.left - margin.right,
@@ -620,13 +582,6 @@ function bubbleChart(data) {
 	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	/*.attr("width", 450).attr("height", 600).attr("id", "bubblechart"),
-
-	//margin = { top: 20, right: 20, bottom: 30, left: 50 },
-	width = +svg.attr("width"),// - margin.left - margin.right,
-	height = +svg.attr("height");// - margin.top - margin.bottom;
-	*/
-	
 	var format = d3.format(",d");
 
 	//var color = d3.scaleOrdinal(d3.schemeCategory20c);
@@ -637,13 +592,7 @@ function bubbleChart(data) {
 	var pack = d3.pack()
 		.size([width, height])
 		.padding(1.5);
-	/*
-	d3.csv("flare.csv", function (d) {
-		d.value = +d.value;
-		if (d.value) return d;
-	}, function (error, classes) {
-		if (error) throw error;
-*/
+	
 	var root = d3.hierarchy({ children: data })
 	 .sum(function (d) { return d.tripCount; })
 	 .each(function (d) {
@@ -653,8 +602,6 @@ function bubbleChart(data) {
 	 		d.bin = d.data.bin;
 	 		d.avspeed = d.data.avspeed;
 	 		d.tripCount = d.data.tripCount;
-	 		//    d.package = id.slice(0, i);
-	 		//    d.class = id.slice(i + 1);
 	 	}
 	 })
 	;
@@ -681,25 +628,16 @@ function bubbleChart(data) {
 			return ["TaxiID: " + d.id, " Trip Count: " + d.tripCount, " Average Speed: " + d.avspeed];
 		});
 	})
-		.on("mouseout", function (d, i) {
-			d3.select("#t" + d.id).remove();
-		});
+	.on("mouseout", function (d, i) {
+		d3.select("#t" + d.id).remove();
+	});
 
 	node.append("clipPath")
 		.attr("id", function (d) { return "clip-" + d.id; })
 	  .append("use")
 		.attr("xlink:href", function (d) { return "#" + d.id; });
-	/*
-  node.append("text")
-      .attr("clip-path", function (d) { return "url(#clip-" + d.id + ")"; })
-    .selectAll("tspan")
-    .data(function (d) { return "Taxi: " + d.id; })
-    .enter().append("tspan")
-      .attr("x", 0)
-      .attr("y", function(d, i, nodes) { return 13 + (i - nodes.length / 2 - 0.5) * 10; })
-      .text(function(d) { return d; });
-	 */ 
+	
 	node.append("title")
 		.text(function (d) { return "Taxi: " + d.id + "\nTrips: " + format(d.tripCount) + "\nAverage Speed: " + format(d.avspeed); });
-	//});
+
 }
