@@ -210,7 +210,6 @@ function clearMap() {
 //***************************************************************************************************************************************** 
 
 var displayed_data;
-
 function updateVisualizations(data) {
 	displayed_data = data;
 	testVis(data);
@@ -239,7 +238,7 @@ map.on('draw:created', function (e) {
         	// update graphs when drawing a rectangle
 			updateVisualizations(result);
         	DrawRS(result);
-			console.log(result);
+			//console.log(result);
         });
 	}
 	drawnItems.addLayer(layer); //Add your Selection to Map 
@@ -294,6 +293,7 @@ function testVis(data) {
 	var margin = { top: 20, right: 20, bottom: 70, left: 50 },
 	width = +svg.attr("width") - margin.left - margin.right,
 	height = +svg.attr("height") - margin.top - margin.bottom;
+	
 	var x = d3.scaleLinear()
 		.rangeRound([0, width]);
 	var y = d3.scaleLinear()
@@ -310,14 +310,15 @@ function testVis(data) {
 	var line = d3.line()
 		.x(function (d) { return x(d.duration); })
 		.y(function (d) { return y(d.distance); });
+		
 	/*var line2 = d3.line()
 		.x(function (d) { return x(d.duration); })
 		.y(function (d) { return y(d.minspeed); });	*/
 	// we handle data that is passed in the first argument of the function.
 	// avgspeed, distance, duration, endtime, maxspeed, minspeed, starttime, streetnames{...}, taxiid, tripid.
 	
-	x.domain(d3.extent(data, function (d) { return d.duration; }));
-	y.domain(d3.extent(data, function (d) { return d.distance; }));
+	x.domain(d3.extent(data, function (d) { return d.duration/=100; }));
+	y.domain(d3.extent(data, function (d) { return d.distance/=100; }));
 	
 	g.append("g")
 		.attr("transform", "translate(0," + height + ")")
@@ -328,7 +329,7 @@ function testVis(data) {
 		.attr("x", width - 100)
 		.attr("y", height + 50)
 		.style("text-anchor", "middle")
-		.text("Distance(miles)")
+		.text("Duration(mins)")
 		.attr("fill", "black")
 		.style("font-size", "11px");
 	
@@ -340,7 +341,7 @@ function testVis(data) {
 		.attr("y", 6)
 		.attr("dy", "0.71em")
 		.attr("text-anchor", "end")
-		.text("Duration(mins)")
+		.text("Distance(miles)")
 		.style("font-size", "11px");
 		
 	g.append("path")
@@ -351,6 +352,7 @@ function testVis(data) {
 		.attr("stroke-linecap", "round")
 		.attr("stroke-width", 1.5)
 		.attr("d", line);
+		
 	/*g.append("path")
 		.datum(data)
 		.attr("fill", "none")
@@ -426,28 +428,18 @@ function barChart(data) {
 		.attr("width", x.bandwidth())
 		.attr("y", function (d) { return y(d.y); })
 		.attr("height", function (d) { return height - y(d.y); })
-	.on("click", function(d) {
+		.on("click", function(d) {
 		clearMap();
 		DrawRS(d.bin);
 	})
-	.on("mouseover", function (d, i) {
-		svg.append("text")
-        .attr("id", "t" + d.tripid)
-        .text(function () {
-           return ["TaxiID: " + d.taxiid, "TripID: " + d.tripid];
-        });
-	})
-	.on("mouseout", function (d, i) {
-		d3.select("#t" + d.tripid).remove();
-	});
+	.append("title")
+	.text(function(d){return d.avspeed;});	
 }
 
 //=========sample scatterplot graph=========
 
-function scatterPlot(data){
-	
-	data = cleanData(data);
-	
+function scatterPlot(data){	
+	data = cleanData(data);	
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
     width = 400 - margin.left - margin.right,
@@ -487,7 +479,7 @@ var svg = d3.select("body").select("div#rightside").select("div#scatterplot").ap
 	;
 
   // scale the range of the data
-  x.domain(d3.extent(data, function(d) { return d.duration/=100; }));
+  x.domain(d3.extent(data, function(d) { return d.duration; }));
   y.domain([0, d3.max(data, function(d) { return d.avspeed; })]);
   
   // add the dots
@@ -619,17 +611,6 @@ function bubbleChart(data) {
 	.on("click", function (d) {
 		clearMap();
 		DrawRS(d.bin);
-	})
-
-	.on("mouseover", function (d, i) {
-		svg.append("text")
-		.attr("id", "t" + d.id)
-		.text(function () {
-			return ["TaxiID: " + d.id, " Trip Count: " + d.tripCount, " Average Speed: " + d.avspeed];
-		});
-	})
-	.on("mouseout", function (d, i) {
-		d3.select("#t" + d.id).remove();
 	});
 
 	node.append("clipPath")
