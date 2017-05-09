@@ -611,6 +611,17 @@ function bubbleChart(data) {
 	.on("click", function (d) {
 		clearMap();
 		DrawRS(d.bin);
+	})
+ 
+ 	.on("mouseover", function (d, i) {
+     		svg.append("text")
+     		.attr("id", "t" + d.id)
+     		.text(function () {
+         			return ["TaxiID: " + d.id, " Trip Count: " + d.tripCount, " Average Speed: " + d.avspeed];
+         		});
+     	})
+ 	.on("mouseout", function (d, i) {
+     		d3.select("#t" + d.id).remove();
 	});
 
 	node.append("clipPath")
